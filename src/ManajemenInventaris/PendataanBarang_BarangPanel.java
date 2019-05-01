@@ -97,7 +97,7 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
         String query = "SELECT * FROM tbl_barang";
 
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
