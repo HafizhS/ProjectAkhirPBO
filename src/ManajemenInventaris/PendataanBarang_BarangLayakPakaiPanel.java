@@ -7,6 +7,7 @@ import java.awt.Insets;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.util.List;
 import java.util.Random;
 import javax.imageio.ImageIO;
@@ -23,6 +24,8 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
     private Manajemen_Main parent = null;
     private Manajemen_PendataanBarangPanel docker = null;
 
+    private String query;
+
     //digunakan saat masa pengembangan
     private static final int DEVONLY_JUMLAH_BARANG = 100;
     private String[] namaBarangs = {"dummy_barang", "barang_dummy", "barang_barang", "dummy_dummy"};
@@ -33,8 +36,56 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
         this.docker = docker;
         this.parent = parent;
         initComponents();
-        initBarang();
+//        initBarang();
+        initBarangfromDB();
         initGambar();
+
+    }
+
+    private void initBarangfromDB() {
+
+        try {
+            this.query = "select * from tbl_barang where status = 'SANGAT BAIK' OR status = 'BAIK'";
+            ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
+            int i = 0;
+            
+            SwingWorker<Void, String> sw = new SwingWorker<Void, String>() {
+                @Override
+                protected Void doInBackground() throws Exception {
+                    while (rs.next()) {
+
+                        System.out.println("BarangLayakPakai");
+                        GridBagConstraints gbsBarangPanel = new GridBagConstraints();
+                        System.out.println(current_x + "<before inc>" + current_y);
+                        gbsBarangPanel.gridx = current_x;
+                        gbsBarangPanel.gridy = current_y;
+                        gbsBarangPanel.insets = new Insets(7, 7, 7, 7);
+                        current_y = (current_x != MAX_X) ? current_y : current_y + 1;
+                        current_x = (current_x != MAX_X) ? current_x + 1 : 0;
+                        System.out.println(current_x + "<after inc>" + current_y);
+                        try {
+                            JLabel loadingLabel = new JLabel("Loading... [" + (i + 1) + "]");
+                            panel_dockerBarang.add(loadingLabel, gbsBarangPanel);
+                            panel_dockerBarang.add(new PendataanBarang_BarangPanel(parent, rs.getInt("id_barang")), gbsBarangPanel);
+
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+
+                        if (docker.selectedPanel.equals(PendataanBarang_BarangLayakPakaiPanel.this)) {
+                            docker.revalidate();
+                            panel_dockerBarang.updateUI();
+                            panel_dockerBarang.revalidate();
+                        }
+                    }
+
+                    return null;
+                }
+            };
+            sw.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
