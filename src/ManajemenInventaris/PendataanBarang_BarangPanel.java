@@ -10,7 +10,12 @@ import java.util.logging.Logger;
 import java.io.File;
 import java.sql.ResultSet;
 import javax.imageio.ImageIO;
+import java.io.File;
+import java.sql.ResultSet;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+
+
 
 public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
 
@@ -24,7 +29,6 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
     private BufferedImage gambarBarang;
     private String kondisi;
 
-    
     public PendataanBarang_BarangPanel(Manajemen_PendataanBarangPanel parent) {
         initComponents();
     }
@@ -33,31 +37,25 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
         this.idbarang = idbarang;
         this.parent = parent;
         initComponents();
-        
-        String query = "Select * from tbl_barang where id_barang = '"+this.idbarang+"'";
-      
+
+        String query = "Select * from tbl_barang where id_barang = '" + this.idbarang + "'";
+
         try {
             ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
             rs.next();
             label_namabarang.setText(rs.getString("nama_barang"));
-            
+
             if (rs.getString("image") != null) {
-            gambarBarang = ImageIO.read(new File(rs.getString("image")));
-            Dimension scaledDimension = this.parent.getScaledDimension(new Dimension(gambarBarang.getWidth(), gambarBarang.getHeight()), new Dimension(239, 144));
-            label_gambarbarang.setIcon(new ImageIcon(gambarBarang.getScaledInstance((int) scaledDimension.getWidth(), (int) scaledDimension.getHeight(), Image.SCALE_SMOOTH)));
-            label_gambarbarang.setText("");
-        } else {
-            label_gambarbarang.setText("Gambar tidak ada");
-        }
-            
-            
-            
+                gambarBarang = ImageIO.read(new File(rs.getString("image")));
+                Dimension scaledDimension = this.parent.getScaledDimension(new Dimension(gambarBarang.getWidth(), gambarBarang.getHeight()), new Dimension(239, 144));
+                label_gambarbarang.setIcon(new ImageIcon(gambarBarang.getScaledInstance((int) scaledDimension.getWidth(), (int) scaledDimension.getHeight(), Image.SCALE_SMOOTH)));
+                label_gambarbarang.setText("");
+            } else {
+                label_gambarbarang.setText("Gambar tidak ada");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-       
-        
-        
     }
 
     // CONTRUCTOR DUMMY
@@ -94,12 +92,12 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
             label_gambarbarang.setText("Gambar tidak ada");
         }
     }
-    
+
     private void getFromDB() {
         String query = "SELECT * FROM tbl_barang";
-        
+
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -175,7 +173,7 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
 
     private void label_gambarbarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_gambarbarangMouseClicked
         try {
-            new PendataanBarang_EditHapusForm(this,1,"Edit").setVisible(true);
+            new PendataanBarang_EditHapusForm(this, 1, "Edit").setVisible(true);
         } catch (ParseException ex) {
             Logger.getLogger(PendataanBarang_BarangPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
