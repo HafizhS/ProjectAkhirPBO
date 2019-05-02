@@ -1,20 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ManajemenInventaris;
 
+import static java.lang.Class.forName;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
+import com.mysql.jdbc.Driver;
 
-/**
- *
- * @author LENOVO
- */
 public class DBconnection {
-     public static Connection getKoneksi(){
+       
+      public static Connection getKoneksi(){
         
           String host = "localhost";
           String port = "3306";
