@@ -36,6 +36,10 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
 
     }
 
+    Manajemen_PengembalianBarangPanel() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     private void initGambar() throws IOException {
         BufferedImage confirmBtn = ImageIO.read(new File("image\\button\\konfirmasi_btn.png"));
 

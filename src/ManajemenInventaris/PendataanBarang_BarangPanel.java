@@ -4,7 +4,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.io.File;
+import java.sql.ResultSet;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.sql.ResultSet;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+
+
 
 public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
 
@@ -22,8 +33,29 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
         initComponents();
     }
 
-    public PendataanBarang_BarangPanel(Manajemen_PendataanBarangPanel parent, int idbarang) {
-        
+    public PendataanBarang_BarangPanel(Manajemen_Main parent, int idbarang) {
+        this.idbarang = idbarang;
+        this.parent = parent;
+        initComponents();
+
+        String query = "Select * from tbl_barang where id_barang = '" + this.idbarang + "'";
+
+        try {
+            ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
+            rs.next();
+            label_namabarang.setText(rs.getString("nama_barang"));
+
+            if (rs.getString("image") != null) {
+                gambarBarang = ImageIO.read(new File(rs.getString("image")));
+                Dimension scaledDimension = this.parent.getScaledDimension(new Dimension(gambarBarang.getWidth(), gambarBarang.getHeight()), new Dimension(239, 144));
+                label_gambarbarang.setIcon(new ImageIcon(gambarBarang.getScaledInstance((int) scaledDimension.getWidth(), (int) scaledDimension.getHeight(), Image.SCALE_SMOOTH)));
+                label_gambarbarang.setText("");
+            } else {
+                label_gambarbarang.setText("Gambar tidak ada");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // CONTRUCTOR DUMMY
@@ -60,10 +92,10 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
             label_gambarbarang.setText("Gambar tidak ada");
         }
     }
-    
+
     private void getFromDB() {
-        String query = "SELECT * FROM t_barang WHERE kondisi = 'layakPakai'";
-        
+        String query = "SELECT * FROM tbl_barang";
+
     }
     
     @SuppressWarnings("unchecked")
@@ -140,7 +172,11 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void label_gambarbarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_gambarbarangMouseClicked
-
+        try {
+            new PendataanBarang_EditHapusForm(this, 1, "Edit").setVisible(true);
+        } catch (ParseException ex) {
+            Logger.getLogger(PendataanBarang_BarangPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_label_gambarbarangMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
