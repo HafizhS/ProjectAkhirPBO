@@ -150,8 +150,9 @@ public class Manajemen_HomePanel extends javax.swing.JPanel {
         this.persediaanbarang_btn.setIcon(new ImageIcon(persediaanImage.getScaledInstance(persediaanImage.getWidth(), persediaanImage.getHeight(), Image.SCALE_SMOOTH)));
         this.peminjamanbarang_btn.setIcon(new ImageIcon(peminjamanImage_checked.getScaledInstance(peminjamanImage_checked.getWidth(), peminjamanImage_checked.getHeight(), Image.SCALE_SMOOTH)));
         this.pengembalianbarang_btn.setIcon(new ImageIcon(pengembalianImage.getScaledInstance(pengembalianImage.getWidth(), pengembalianImage.getHeight(), Image.SCALE_SMOOTH)));
-        scan_btn.setEnabled(true);
-        selectedPanel = parent.peminjamanBarangPanel;
+        scan_btn.setEnabled(true);        
+        parent.login_Peminjaman_Panel = new Login_Peminjaman_Panel(parent);
+        selectedPanel = parent.login_Peminjaman_Panel;
     }//GEN-LAST:event_peminjamanbarang_btnMouseClicked
 
     private void pengembalianbarang_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pengembalianbarang_btnMouseClicked
@@ -159,7 +160,9 @@ public class Manajemen_HomePanel extends javax.swing.JPanel {
         this.peminjamanbarang_btn.setIcon(new ImageIcon(peminjamanImage.getScaledInstance(peminjamanImage.getWidth(), peminjamanImage.getHeight(), Image.SCALE_SMOOTH)));
         this.pengembalianbarang_btn.setIcon(new ImageIcon(pengembalianImage_checked.getScaledInstance(pengembalianImage_checked.getWidth(), pengembalianImage_checked.getHeight(), Image.SCALE_SMOOTH)));
         scan_btn.setEnabled(true);
-        selectedPanel = parent.pengembalianBarangPanel;
+        parent.login_Pengembalian_Panel = new Login_Pengembalian_Panel(parent);
+        selectedPanel = parent.login_Pengembalian_Panel;
+        
     }//GEN-LAST:event_pengembalianbarang_btnMouseClicked
 
     private void scan_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_scan_btnMouseClicked
@@ -168,6 +171,8 @@ public class Manajemen_HomePanel extends javax.swing.JPanel {
             if (selectedPanel.getClass() != null) {
                 parent.add(selectedPanel, BorderLayout.CENTER);
                 selectedPanel.setVisible(true);
+                parent.revalidate();
+                parent.repaint();
             }
         }
     }//GEN-LAST:event_scan_btnMouseClicked

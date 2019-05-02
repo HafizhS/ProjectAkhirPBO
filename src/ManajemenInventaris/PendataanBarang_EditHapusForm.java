@@ -16,17 +16,24 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
     private PendataanBarang_BarangPanel barangPanel = null;
     private int idBarang;
     Connection koneksi;
+    String action;
     
     private String id_barang;
     private String nama_barang;
     private String jenis_barang;
     private String status_barang;
     
-    public PendataanBarang_EditHapusForm(PendataanBarang_BarangPanel barangPanel, int idBarang) {
-        koneksi = DBconnection.getKoneksi();
+    public PendataanBarang_EditHapusForm(PendataanBarang_BarangPanel barangPanel,int idBarang,String act) throws ParseException {
+        koneksi = DBConnection.getKoneksi();
         this.barangPanel = barangPanel;
         this.idBarang = idBarang;
         initComponents();
+        
+        action = act;
+        if(action.equals("Edit")){
+            noBarang.setEnabled(false);
+            showData(idBarang);
+        }
         
     }
 
@@ -246,10 +253,10 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
         }
     }
     
-    public void showData(String nis) throws ParseException{
+    public void showData(int idBarang) throws ParseException{
         try{
             Statement stmt = koneksi.createStatement();
-            String query = "SELECT * FROM tbl_barang WHERE id_barang = '"+this.idBarang+"'";
+            String query = "SELECT * FROM tbl_barang WHERE id_barang = '"+idBarang+"'";
             ResultSet rs = stmt.executeQuery(query);
             
             rs.next();
