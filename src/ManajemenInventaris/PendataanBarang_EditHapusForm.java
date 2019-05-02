@@ -24,7 +24,7 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
     private String status_barang;
     
     public PendataanBarang_EditHapusForm(PendataanBarang_BarangPanel barangPanel,int idBarang,String act) throws ParseException {
-        koneksi = DBconnection.getKoneksi();
+        koneksi = DBConnection.getKoneksi();
         this.barangPanel = barangPanel;
         this.idBarang = idBarang;
         initComponents();

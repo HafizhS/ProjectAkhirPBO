@@ -84,7 +84,7 @@ public class Login_Peminjaman_Panel extends javax.swing.JPanel {
     private void btnScannerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnScannerActionPerformed
         try{
             String sql = "SELECT * FROM tbl_murid WHERE nis  = '"+txtPinjam.getText()+"'";
-           Connection koneksi = DBconnection.getKoneksi();
+           Connection koneksi = DBConnection.getKoneksi();
            Statement stmt = koneksi.createStatement();
            ResultSet rs = stmt.executeQuery(sql);
            if(rs.first()) {
@@ -92,7 +92,7 @@ public class Login_Peminjaman_Panel extends javax.swing.JPanel {
                    parent.add(parent.peminjamanBarangPanel);
                    this.revalidate();
                    parent.revalidate();
-                   parent.Login_Peminjaman_Panel.setVisible(false);
+                   parent.login_Peminjaman_Panel.setVisible(false);
            }else {
                 JOptionPane.showMessageDialog(null,"Maaf Data Tidak Valid");
            }

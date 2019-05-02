@@ -31,7 +31,7 @@ public class MainApplication {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new SplashScreen().setVisible(true);
-                DBconnection.getKoneksi();
+               DBConnection.getKoneksi();
             }
         });
     }

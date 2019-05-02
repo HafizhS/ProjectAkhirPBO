@@ -41,7 +41,7 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
         String query = "Select * from tbl_barang where id_barang = '" + this.idbarang + "'";
 
         try {
-            ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
+            ResultSet rs = DBConnection.getKoneksi().createStatement().executeQuery(query);
             rs.next();
             label_namabarang.setText(rs.getString("nama_barang"));
 

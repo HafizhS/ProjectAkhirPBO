@@ -1,33 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package ManajemenInventaris;
 
-import static java.lang.Class.forName;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import javax.swing.JOptionPane;
-import com.mysql.jdbc.Driver;
+import java.sql.SQLException;
 
-public class DBconnection {
-       
-      public static Connection getKoneksi(){
-        
-          String host = "localhost";
-          String port = "3306";
-          String username = "root";
-          String password = "";
-          String db = "inventory_app";
-          String konString = "jdbc:mysql://" + host + ":" + port + "/" + db;
-          Connection koneksi = null;
-          
-          try{
-              Class.forName("com.mysql.jdbc.Driver");
-              koneksi = DriverManager.getConnection(konString,username,password);
-              System.out.println("Koneksi Berhasil");
-          }catch(Exception ex){
-              ex.printStackTrace();
-              JOptionPane.showMessageDialog(null,"Koneksi Error");
-              koneksi = null;
-          }
-          
-          return koneksi;
-      }
+/**
+ *
+ * @author Farhanunnasih
+ */
+public class DBConnection {
+    public static Connection getKoneksi() {
+            Connection connection = null;
+		final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+		String url = "jdbc:mysql://localhost:3306/inventory_app";
+		String user = "root";
+		String password = "";
+		try {
+                    Class.forName(JDBC_DRIVER);
+                    connection = DriverManager.getConnection(url, user, password);
+		}catch(SQLException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                    return connection = null;
+		}
+		return connection;
+	}
 }

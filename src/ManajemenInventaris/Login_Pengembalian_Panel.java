@@ -71,7 +71,7 @@ public class Login_Pengembalian_Panel extends javax.swing.JPanel {
         
          try{
             String sql = "SELECT * FROM tbl_murid WHERE nis = '" + text_pengembalian.getText()+ "'";
-            java.sql.Connection conn = DBconnection.getKoneksi();
+            java.sql.Connection conn = DBConnection.getKoneksi();
             java.sql.Statement stm = conn.createStatement();    
             java.sql.ResultSet res = stm.executeQuery(sql);
             

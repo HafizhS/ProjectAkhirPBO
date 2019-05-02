@@ -45,8 +45,8 @@ public class PendataanBarang_BarangTidakLayakPakaiPanel extends javax.swing.JPan
 
     private void initBarangfromDB() {
         try {
-            this.query = "select * from tbl_barang where status = 'HAMPIR RUSAK' OR status = 'RUSAK'";
-            ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
+            this.query = "select * from tbl_barang where status = 'HAMPIR RUSAK' OR status = 'Rusak'";
+            ResultSet rs = DBConnection.getKoneksi().createStatement().executeQuery(query);
             int i = 0;
 
             SwingWorker<Void, String> sw = new SwingWorker<Void, String>() {
