@@ -5,6 +5,7 @@
  */
 package ManajemenInventaris;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -49,6 +50,15 @@ public class Login_Peminjaman_Panel extends javax.swing.JPanel {
         btnScanner.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnScannerActionPerformed(evt);
+            }
+        });
+
+        txtPinjam.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtPinjamKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPinjamKeyReleased(evt);
             }
         });
 
@@ -101,6 +111,34 @@ public class Login_Peminjaman_Panel extends javax.swing.JPanel {
         }
         txtPinjam.setText("");
     }//GEN-LAST:event_btnScannerActionPerformed
+
+    private void txtPinjamKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPinjamKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPinjamKeyReleased
+
+    private void txtPinjamKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPinjamKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+             try{
+            String sql = "SELECT * FROM tbl_murid WHERE nis  = '"+txtPinjam.getText()+"'";
+           Connection koneksi = DBConnection.getKoneksi();
+           Statement stmt = koneksi.createStatement();
+           ResultSet rs = stmt.executeQuery(sql);
+           if(rs.first()) {
+                   parent.peminjamanBarangPanel = new Manajemen_PeminjamanBarangPanel(parent);
+                   parent.add(parent.peminjamanBarangPanel);
+                   this.revalidate();
+                   parent.revalidate();
+                   parent.login_Peminjaman_Panel.setVisible(false);
+           }else {
+                JOptionPane.showMessageDialog(null,"Maaf Data Tidak Valid");
+           }
+        }catch(Exception ex){
+            ex.getMessage();
+        }
+        txtPinjam.setText("");
+        }
+    }//GEN-LAST:event_txtPinjamKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

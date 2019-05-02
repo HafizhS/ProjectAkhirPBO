@@ -5,6 +5,7 @@
  */
 package ManajemenInventaris;
 
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -41,6 +42,12 @@ public class Login_Pengembalian_Panel extends javax.swing.JPanel {
         btn_pengembalian.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_pengembalianActionPerformed(evt);
+            }
+        });
+
+        text_pengembalian.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                text_pengembalianKeyPressed(evt);
             }
         });
 
@@ -94,6 +101,36 @@ public class Login_Pengembalian_Panel extends javax.swing.JPanel {
         }
         text_pengembalian.setText("");
     }//GEN-LAST:event_btn_pengembalianActionPerformed
+
+    private void text_pengembalianKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_text_pengembalianKeyPressed
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+              try{
+            String sql = "SELECT * FROM tbl_murid WHERE nis = '" + text_pengembalian.getText()+ "'";
+            java.sql.Connection conn = DBConnection.getKoneksi();
+            java.sql.Statement stm = conn.createStatement();    
+            java.sql.ResultSet res = stm.executeQuery(sql);
+            
+            if (res.next()) {
+                if (res.getString("id_level").equals("1")) {
+                   parent.pengembalianBarangPanel = new Manajemen_PengembalianBarangPanel(parent);
+                   parent.add(parent.pengembalianBarangPanel);
+                   this.revalidate();
+                   parent.revalidate();
+                   parent.login_Pengembalian_Panel.setVisible(false);
+                    
+                    
+                }
+            }
+            else {
+                JOptionPane.showMessageDialog(null,"Maaf Data Tidak Valid");
+            }
+        }catch(Exception e){
+            e.getMessage();
+        }
+        text_pengembalian.setText("");  
+        }
+    }//GEN-LAST:event_text_pengembalianKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

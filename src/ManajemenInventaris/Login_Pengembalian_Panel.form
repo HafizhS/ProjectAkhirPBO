@@ -53,6 +53,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="text_pengembalian">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="text_pengembalianKeyPressed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
