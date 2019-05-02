@@ -14,6 +14,7 @@ public class Manajemen_Main extends javax.swing.JFrame {
     public Manajemen_PendataanBarangPanel pendataanBarangPanel = null;
     public Manajemen_PengembalianBarangPanel pengembalianBarangPanel = null;
     public Manajemen_PeminjamanBarangPanel peminjamanBarangPanel = null;
+    Login_Peminjaman_Panel Login_Peminjaman_Panel;
 
     public Manajemen_Main() throws Exception {
         initComponents();
