@@ -14,10 +14,11 @@ public class Manajemen_Main extends javax.swing.JFrame {
     public Manajemen_PendataanBarangPanel pendataanBarangPanel = null;
     public Manajemen_PengembalianBarangPanel pengembalianBarangPanel = null;
     public Manajemen_PeminjamanBarangPanel peminjamanBarangPanel = null;
-    Login_Peminjaman_Panel Login_Peminjaman_Panel;
-
+    public Login_Pengembalian_Panel login_Pengembalian_Panel = null;
+ 
     public Manajemen_Main() throws Exception {
         initComponents();
+        
         this.setLayout(new BorderLayout());
         this.setTitle("Manajemen Inventaris");
         this.setIconImage(ImageIO.read(new File("image\\smkn4.png")).getScaledInstance(30, 30, Image.SCALE_SMOOTH));
