@@ -25,7 +25,7 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
     private Manajemen_PendataanBarangPanel docker = null;
 
     private String query;
-
+    
     //digunakan saat masa pengembangan
     private static final int DEVONLY_JUMLAH_BARANG = 100;
     private String[] namaBarangs = {"dummy_barang", "barang_dummy", "barang_barang", "dummy_dummy"};
@@ -40,20 +40,22 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
         initBarangfromDB();
         initGambar();
 
+        this.revalidate();
+        this.repaint();
     }
 
     private void initBarangfromDB() {
 
         try {
-            this.query = "select * from tbl_barang where status = 'SANGAT BAIK' OR status = 'BAIK'";
+            this.query = "select * from tbl_barang where status like '%SANGAT BAIK' OR status like '%BAIK'";
             ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
             int i = 0;
             
             SwingWorker<Void, String> sw = new SwingWorker<Void, String>() {
                 @Override
                 protected Void doInBackground() throws Exception {
+                    Thread.sleep(1000);
                     while (rs.next()) {
-
                         System.out.println("BarangLayakPakai");
                         GridBagConstraints gbsBarangPanel = new GridBagConstraints();
                         System.out.println(current_x + "<before inc>" + current_y);
@@ -67,6 +69,7 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
                             JLabel loadingLabel = new JLabel("Loading... [" + (i + 1) + "]");
                             panel_dockerBarang.add(loadingLabel, gbsBarangPanel);
                             panel_dockerBarang.add(new PendataanBarang_BarangPanel(parent, rs.getInt("id_barang")), gbsBarangPanel);
+                            panel_dockerBarang.remove(loadingLabel);
 
                         } catch (Exception ex) {
                             ex.printStackTrace();
@@ -78,7 +81,6 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
                             panel_dockerBarang.revalidate();
                         }
                     }
-
                     return null;
                 }
             };
@@ -134,7 +136,7 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
         };
         sw.execute();
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -198,7 +200,7 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void button_tambahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_tambahMouseClicked
-        BarangLayakPakai_TambahForm form = new BarangLayakPakai_TambahForm();
+        BarangLayakPakai_TambahForm form = new BarangLayakPakai_TambahForm(parent);
         form.setVisible(true);
     }//GEN-LAST:event_button_tambahMouseClicked
 

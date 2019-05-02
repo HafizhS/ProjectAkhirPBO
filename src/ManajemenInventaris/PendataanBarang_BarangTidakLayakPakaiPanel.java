@@ -67,6 +67,7 @@ public class PendataanBarang_BarangTidakLayakPakaiPanel extends javax.swing.JPan
                             JLabel loadingLabel = new JLabel("Loading... [" + (i + 1) + "]");
                             panel_dockerBarang.add(loadingLabel, gbsBarangPanel);
                             panel_dockerBarang.add(new PendataanBarang_BarangPanel(parent, rs.getInt("id_barang")), gbsBarangPanel);
+                            panel_dockerBarang.remove(loadingLabel);
 
                         } catch (Exception ex) {
                             ex.printStackTrace();

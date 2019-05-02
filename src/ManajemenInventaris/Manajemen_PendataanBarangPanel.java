@@ -16,10 +16,10 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
     private final Font BAR_FONT_BUTTON_ACTIVE = new java.awt.Font("Tahoma", 1, 16);
     private final Font BAR_FONT_BUTTON_UNACTIVE = new java.awt.Font("Tahoma", 0, 16);
 
-    private PendataanBarang_BarangLayakPakaiPanel barangLayakPakaiPanel = null;
-    private PendataanBarang_BarangTidakLayakPakaiPanel barangTidakLayakPakaiPanel = null;
-    private PendataanBarang_PinjamHistoryPanel pinjamHistoryPanel = null;
-    private PendataanBarang_PengembalianHistoryPanel pengembalianHistoryPanel = null;
+    public PendataanBarang_BarangLayakPakaiPanel barangLayakPakaiPanel = null;
+    public PendataanBarang_BarangTidakLayakPakaiPanel barangTidakLayakPakaiPanel = null;
+    public PendataanBarang_PinjamHistoryPanel pinjamHistoryPanel = null;
+    public PendataanBarang_PengembalianHistoryPanel pengembalianHistoryPanel = null;
 
     public Manajemen_PendataanBarangPanel(Manajemen_Main parent) throws IOException {
         this.parent = parent;
@@ -36,6 +36,24 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
 
     }
 
+    public void reloadLayakPakaiPanel() throws IOException{
+        this.docker_panel.remove(barangLayakPakaiPanel);
+        this.docker_panel.add(barangLayakPakaiPanel = new PendataanBarang_BarangLayakPakaiPanel(parent, this));
+        this.docker_panel.revalidate();
+        this.docker_panel.updateUI();
+        this.revalidate();
+        this.updateUI();       
+    }
+    
+    public void reloadTidakLayakPakaiPanel() throws IOException{
+        this.docker_panel.remove(barangLayakPakaiPanel);
+        this.docker_panel.add(barangTidakLayakPakaiPanel = new PendataanBarang_BarangTidakLayakPakaiPanel(parent, this));
+        this.docker_panel.revalidate();
+        this.docker_panel.updateUI();
+        this.revalidate();
+        this.updateUI();    
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -96,11 +114,6 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
         jTextField1.setText("Cari...");
         jTextField1.setBorder(null);
         jTextField1.setOpaque(false);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         bar_barangRusak.setBackground(new java.awt.Color(102, 153, 255));
         bar_barangRusak.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -203,10 +216,6 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         this.parent.backToHome(this);
     }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void changeBarState(JLabel whichActive) {
         bar_barangLayakPakai.setBackground(BAR_COLOR_BUTTON_UNACTIVE);

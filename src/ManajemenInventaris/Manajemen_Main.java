@@ -33,7 +33,28 @@ public class Manajemen_Main extends javax.swing.JFrame {
 
     }
 
-    public Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
+//    public Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
+//        double original_width = imgSize.getWidth();
+//        double original_height = imgSize.getHeight();
+//        double bound_width = boundary.getWidth();
+//        double bound_height = boundary.getHeight();
+//        double new_width = original_width;
+//        double new_height = original_height;
+//
+//        if (original_width > bound_width) {
+//            new_width = bound_width;
+//            new_height = (new_width * original_height) / original_width;
+//        }
+//
+//        if (new_height > bound_height) {
+//            new_height = bound_height;
+//            new_width = (new_height * original_width) / original_height;
+//        }
+//
+//        return new Dimension((int) new_width, (int) new_height);
+//    }
+
+    public static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
         double original_width = imgSize.getWidth();
         double original_height = imgSize.getHeight();
         double bound_width = boundary.getWidth();
@@ -53,7 +74,7 @@ public class Manajemen_Main extends javax.swing.JFrame {
 
         return new Dimension((int) new_width, (int) new_height);
     }
-
+    
     public void backToHome(JPanel panel) {
         panel.setVisible(false);
         homePanel.repaint();

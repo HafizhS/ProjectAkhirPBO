@@ -8,7 +8,6 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.border.Border;
 
 public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
 
