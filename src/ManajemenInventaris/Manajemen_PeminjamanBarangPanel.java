@@ -7,10 +7,16 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.util.Date;
+import java.util.Random;
+import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
 
@@ -23,6 +29,54 @@ public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
         initComponents();
         initGambar();
     }
+
+    String id_barang;
+    
+    public void simpan(){
+        int id_peminjaman =+2;
+        int nis =+5;
+        //Menampilkan Data Terlebih dahulu Dari Tabel Barang
+        try {
+            String sql = " SELECT * FROM tbl_barang";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.Statement stm=conn.createStatement();
+            java.sql.ResultSet res=stm.executeQuery(sql); 
+            while(res.next()){
+                id_barang = res.getString("id_barang");
+            }
+            } catch (Exception e) {
+                e.getMessage();
+            }
+        
+        try {
+            //PS.untuk hasin , nanti masukin datanya sesuai siswa
+            String sql_insert = "INSERT INTO tbl_peminjaman VALUES  ('"+id_peminjaman+"', '"+nis+"', NULL, '"+id_barang+"', NULL, NULL);";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql_insert);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Barang Berhasil Di Pinjam");
+            this.parent.backToHome(this);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+   public void random(){
+        int number = 0;
+        Random random = new Random();
+        for (int i = 1; i <= 1; i++) {
+            number = 1+random.nextInt(100000);
+        } 
+         random_code.setText(number+"");
+   }
+   
+   public void random_detail_peminjaman(){
+        int id_detail_peminjaman;
+        Random random = new Random();
+        for (int i = 1; i <= 1; i++) {
+            id_detail_peminjaman = 1+random.nextInt(1000);
+        } 
+   }
 
     private void initGambar() throws IOException {
         BufferedImage harapScan = ImageIO.read(new File("image\\scanning_onboarding.png"));
@@ -218,9 +272,42 @@ public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
         this.parent.repaint();
         this.repaint();
         this.revalidate();
+        simpan();
+    }//GEN-LAST:event_button_pinjamMouseClicked
+    
+    public void load_table(){
+        // membuat tampilan model tabel
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Nama Barang");
+        
+        //menampilkan data database kedalam tabel
+        try {
+            String sql = " SELECT * FROM tbl_barang"
+                    + " INNER JOIN tbl_detail_peminjaman ON tbl_barang.`id_barang` = tbl_detail_peminjaman.`id_barang`"
+                    + " WHERE tbl_detail_peminjaman.`id_peminjaman` = '"+random_code.getText()+"'" ;
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.Statement stm=conn.createStatement();
+            java.sql.ResultSet res=stm.executeQuery(sql);
+            while(res.next()){
+                model.addRow(new Object[]{res.getString(3)});
+            }
+            table_barangDipinjam.setModel(model);
+        } catch (Exception e) {
+        }
+    }
+        
+    private void codeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codeActionPerformed
+       //masukan kode anjing
+    }//GEN-LAST:event_codeActionPerformed
+
+    private void codeKeyTyped(java.awt.event.KeyEvent evt) {                              
+        i = table_barangDipinjam.getRowCount();
+        String id_peminjaman_fix = random_code.getText();
+        String barcode = code.getText();
+        int id_barcode = Integer.parseInt(barcode);
         
 
-    }//GEN-LAST:event_button_pinjamMouseClicked
+    }                                          
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel button_home;

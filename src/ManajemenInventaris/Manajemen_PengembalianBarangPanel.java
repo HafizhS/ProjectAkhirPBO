@@ -1,13 +1,20 @@
 package ManajemenInventaris;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.border.Border;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.table.DefaultTableModel;
 
 public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
 
@@ -19,6 +26,9 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
     //Akan digunakan jika DB sudah jalan
     private boolean isSafeToStart = false;
     private int userId;
+    int i;
+    int id_barang;
+    
 
     public Manajemen_PengembalianBarangPanel(Manajemen_Main parent) throws IOException {
         this.parent = parent;
@@ -46,6 +56,7 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        kondisi = new javax.swing.ButtonGroup();
         label_title = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -175,6 +186,11 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
         table_barangDipinjam.setGridColor(new java.awt.Color(51, 153, 255));
         table_barangDipinjam.setRowHeight(40);
         table_barangDipinjam.setSelectionForeground(new java.awt.Color(51, 153, 255));
+        table_barangDipinjam.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_barangDipinjamMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table_barangDipinjam);
 
         jSeparator1.setForeground(new java.awt.Color(102, 153, 255));
@@ -193,21 +209,25 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
         label_titleKondisiBarang.setText("Kondisi Barang :");
 
         radBtn_Rusak.setBackground(new java.awt.Color(255, 255, 255));
+        kondisi.add(radBtn_Rusak);
         radBtn_Rusak.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         radBtn_Rusak.setForeground(new java.awt.Color(102, 153, 255));
         radBtn_Rusak.setText("Rusak");
 
         radBtn_HampirRusak.setBackground(new java.awt.Color(255, 255, 255));
+        kondisi.add(radBtn_HampirRusak);
         radBtn_HampirRusak.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         radBtn_HampirRusak.setForeground(new java.awt.Color(102, 153, 255));
         radBtn_HampirRusak.setText("Hampir Rusak");
 
         radBtn_Baik.setBackground(new java.awt.Color(255, 255, 255));
+        kondisi.add(radBtn_Baik);
         radBtn_Baik.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         radBtn_Baik.setForeground(new java.awt.Color(102, 153, 255));
         radBtn_Baik.setText("Baik");
 
         radBtn_SangatBaik.setBackground(new java.awt.Color(255, 255, 255));
+        kondisi.add(radBtn_SangatBaik);
         radBtn_SangatBaik.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
         radBtn_SangatBaik.setForeground(new java.awt.Color(102, 153, 255));
         radBtn_SangatBaik.setText("Sangat Baik");
@@ -342,11 +362,120 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_button_homeMouseClicked
 
     private void button_confirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_confirmMouseClicked
+        kondisi_barang();
+        insert_pengembalian();
+        buat_status_0();
         this.parent.getContentPane().add(berhasilPanel, new BorderLayout().CENTER);
         this.berhasilPanel.setVisible(true);
         this.parent.pengembalianBarangPanel.setVisible(false);
     }//GEN-LAST:event_button_confirmMouseClicked
+    int baris;
+    private void table_barangDipinjamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_barangDipinjamMouseClicked
+        // TODO add your handling code here:
+        baris = table_barangDipinjam.getSelectedRow();
+    }//GEN-LAST:event_table_barangDipinjamMouseClicked
+    public void load_table_peminjaman(){
+        //tampilan model tabel
+        DefaultTableModel tabel = new DefaultTableModel();
+        tabel.addColumn("id_barang");
+        tabel.addColumn("nama_barang");
+        
+        //menampilkan data barang kedalam tabel
+        try {
+            String sql = "SELECT * FROM tbl_peminjaman "
+                    + "INNER JOIN tbl_barang on tbl_peminjaman.id_barang = tbl_barang.id_peminjaman";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.Statement stm=conn.createStatement();
+            java.sql.ResultSet res=stm.executeQuery(sql);
+            while(res.next()){
+                tabel.addRow(new Object[]{res.getString(3),res.getString(4)});
+            }
+        } catch (Exception e) {
+            
+        }
+        table_barangDipinjam.setModel(tabel);
+        
+    
+    }
+    
+    public void insert_pengembalian(){
+        i = table_barangDipinjam.getRowCount();
+        int id_pengembalian = 1;
+        int nis = 1718117191;
 
+        try{
+        String sql = "INSERT INTO tbl_pengembalian "
+                + "VALUES ('"+id_pengembalian+"','"+nis+"',NULL,NULL)";
+        java.sql.Connection conn=(Connection)config.configDB();
+        java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+        pst.execute();      
+        
+        } catch(Exception a){
+
+        }
+            
+    }
+    int status;
+    public void kondisi_barang(){
+        // buat radio buttonnya
+        if(radBtn_SangatBaik.isSelected()){
+             status = 1;
+        }
+        else if(radBtn_Baik.isSelected()){
+             status = 2;
+        }
+        else if(radBtn_HampirRusak.isSelected()){
+             status = 3;
+        }        
+        else if(radBtn_Rusak.isSelected()){
+             status = 4;
+        }        
+        
+        //mengganti status barang 
+        try {
+            String sql = "UPDATE tbl_barang SET status = '"+status+"'";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            pst.execute();
+            
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(parent, e);
+        }
+    }
+    public void buat_status_0(){
+        status = 0;
+        try {
+            String sql = "UPDATE tbl_peminjaman SET status = '"+status+"'";
+            java.sql.Connection conn=(Connection)config.configDB();
+            java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+            pst.execute();
+            
+            
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(parent, e);
+        }        
+        
+        
+    }
+    public void validation(){
+        if(!table_barangDipinjam.equals(id_barang)){
+            UIManager UI = new UIManager();
+            UI.put("OptionPane.messageForeground",new ColorUIResource(23,138,235));
+            UI.put("panel.background", Color.white);            
+            JOptionPane.showMessageDialog(parent, "barang tidak sesuai history peminjaman");
+            this.parent.backToHome(this);
+        }else {
+        
+        }
+        for (int j = 1; j > 2; j++) {
+            
+        }
+        
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel button_confirm;
     private javax.swing.JLabel button_home;
@@ -354,6 +483,7 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.ButtonGroup kondisi;
     private javax.swing.JLabel label_atasNama;
     private javax.swing.JLabel label_dataPeminjamanKelas;
     private javax.swing.JLabel label_dataPeminjamanNama;
