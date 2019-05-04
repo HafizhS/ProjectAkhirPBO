@@ -3,23 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/PendataanBarang_BarangLayakPakaiPanel.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/BarangLayakPakai_TambahForm.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/DatabaseConnection.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/BarcodeScanneForm.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/PendataanBarang_BarangPanel.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/Manajemen_PengembalianBarangPanel.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/PendataanBarang_BarangTidakLayakPakaiPanel.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/Manajemen_Main.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/Manajemen_PendataanBarangPanel.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/PendataanBarang_PengembalianHistoryPanel.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/DBconnection.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/Manajemen_PeminjamanBarangPanel.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/MainApplication.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/PendataanBarang_EditHapusForm.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/Manajemen_HomePanel.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/SplashScreen.java</file>
-            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO/src/ManajemenInventaris/PeminjamanBarang_AfterPinjamButtonPanel.java</file>
+            <file>file:/C:/Users/Hafizh/Documents/NetBeansProjects/ProjectAkhirPBO_ManajemenInventaris/src/ManajemenInventaris/DBconnection.java</file>
         </group>
     </open-files>
 </project-private>
