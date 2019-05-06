@@ -110,6 +110,7 @@
     <Component class="javax.swing.JLabel" name="label_kondisi">
       <Properties>
         <Property name="text" type="java.lang.String" value="{kondisi}"/>
+        <Property name="opaque" type="boolean" value="true"/>
       </Properties>
     </Component>
   </SubComponents>

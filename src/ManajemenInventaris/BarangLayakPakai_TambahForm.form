@@ -28,7 +28,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+          <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -43,7 +43,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jPanel2" alignment="1" max="32767" attributes="0"/>
+              <Component id="jPanel2" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
@@ -58,6 +58,7 @@
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -84,47 +85,53 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="380" max="-2" attributes="0"/>
+                                      <Component id="button_simpan" min="-2" pref="134" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace pref="16" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="cmbJenisbrg" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="cmbKondisibrg" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="txtUmurbrg" min="-2" pref="249" max="-2" attributes="0"/>
-                                          <Group type="102" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
                                               <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="pathLabel" pref="249" max="32767" attributes="0"/>
+                                              <Component id="pathLabel" max="-2" attributes="0"/>
                                           </Group>
+                                          <Component id="txtUmurbrg" min="-2" pref="249" max="-2" attributes="0"/>
                                           <Component id="txtID" min="-2" pref="249" max="-2" attributes="0"/>
                                           <Component id="txtNamabrg" min="-2" pref="249" max="-2" attributes="0"/>
                                           <Component id="idbarcode" min="-2" pref="249" max="-2" attributes="0"/>
                                           <Component id="calTglmasuk" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="cmbJenisbrg" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="cmbStatusbrg" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
                                       </Group>
+                                      <EmptySpace min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="jButton1" min="-2" pref="81" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -133,7 +140,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtID" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -156,7 +163,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="cmbStatusbrg" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbKondisibrg" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -174,9 +181,9 @@
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtUmurbrg" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" pref="33" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="button_simpan" pref="53" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -199,7 +206,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel5">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Status Barang"/>
+                <Property name="text" type="java.lang.String" value="Kondisi Barang"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="txtID">
@@ -209,20 +216,12 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtNamabrg">
             </Component>
-            <Component class="javax.swing.JButton" name="jButton1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Simpan"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JComboBox" name="cmbJenisbrg">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="2">
-                    <StringItem index="0" value="Asset"/>
-                    <StringItem index="1" value="Habis Pakai"/>
+                    <StringItem index="0" value="asset"/>
+                    <StringItem index="1" value="habis Pakai"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -230,13 +229,14 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cmbStatusbrg">
+            <Component class="javax.swing.JComboBox" name="cmbKondisibrg">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="3">
-                    <StringItem index="0" value="BAIK"/>
-                    <StringItem index="1" value="HAMPIR RUSAK"/>
-                    <StringItem index="2" value="RUSAK"/>
+                  <StringArray count="4">
+                    <StringItem index="0" value="baik"/>
+                    <StringItem index="1" value="normal"/>
+                    <StringItem index="2" value="hampir rusak"/>
+                    <StringItem index="3" value="rusak"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -269,6 +269,9 @@
             <Component class="javax.swing.JTextField" name="idbarcode">
             </Component>
             <Component class="javax.swing.JTextField" name="txtUmurbrg">
+              <Properties>
+                <Property name="editable" type="boolean" value="false"/>
+              </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jButton2">
               <Properties>
@@ -280,8 +283,18 @@
             </Component>
             <Component class="javax.swing.JLabel" name="pathLabel">
               <Properties>
+                <Property name="horizontalAlignment" type="int" value="2"/>
                 <Property name="text" type="java.lang.String" value="Path:"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="button_simpan">
+              <Properties>
+                <Property name="horizontalAlignment" type="int" value="0"/>
+                <Property name="text" type="java.lang.String" value="button_simpan"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_simpanMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -1,10 +1,15 @@
 package ManajemenInventaris;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -17,12 +22,19 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
     private Connection koneksi;
     private String filePath = "";
     private Manajemen_Main parent = null;
-    
+    int id_barang;
+
     public BarangLayakPakai_TambahForm(Manajemen_Main parent) {
         this.parent = parent;
         koneksi = DBconnection.getKoneksi();
         initComponents();
-
+        try {
+            initGambar();
+        }catch (IOException ex) {
+            ex.printStackTrace();
+        }finally {
+            button_simpan.setText("");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -38,9 +50,8 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
         txtNamabrg = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         cmbJenisbrg = new javax.swing.JComboBox<>();
-        cmbStatusbrg = new javax.swing.JComboBox<>();
+        cmbKondisibrg = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -50,6 +61,7 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
         txtUmurbrg = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         pathLabel = new javax.swing.JLabel();
+        button_simpan = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -67,20 +79,13 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
 
         jLabel4.setText("*Jenis Barang");
 
-        jLabel5.setText("Status Barang");
+        jLabel5.setText("Kondisi Barang");
 
         txtID.setEnabled(false);
 
-        jButton1.setText("Simpan");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        cmbJenisbrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "asset", "habis Pakai" }));
 
-        cmbJenisbrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Asset", "Habis Pakai" }));
-
-        cmbStatusbrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BAIK", "HAMPIR RUSAK", "RUSAK" }));
+        cmbKondisibrg.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "baik", "normal", "hampir rusak", "rusak" }));
 
         jLabel6.setText("Tanggal Masuk");
 
@@ -90,6 +95,8 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
 
         jLabel9.setText("*Umur Barang");
 
+        txtUmurbrg.setEditable(false);
+
         jButton2.setText("Pilih gambar");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -97,51 +104,63 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
             }
         });
 
+        pathLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         pathLabel.setText("Path:");
+
+        button_simpan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        button_simpan.setText("button_simpan");
+        button_simpan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                button_simpanMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel6))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addGap(380, 380, 380)
+                                .addComponent(button_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(16, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9))
+                        .addGap(48, 48, 48)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(cmbJenisbrg, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cmbKondisibrg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel9))
-                                .addGap(48, 48, 48)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtUmurbrg, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jButton2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(pathLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE))
+                                        .addComponent(pathLabel))
+                                    .addComponent(txtUmurbrg, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNamabrg, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(idbarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(calTglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(cmbJenisbrg, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(cmbStatusbrg, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addGap(16, 16, 16))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10))))
+                                    .addComponent(calTglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap())))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -160,7 +179,7 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbStatusbrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbKondisibrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbJenisbrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -174,16 +193,16 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtUmurbrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(7, 7, 7))
+                .addGap(18, 18, 18)
+                .addComponent(button_simpan, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
@@ -195,7 +214,8 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
                 .addGap(17, 17, 17)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -206,30 +226,34 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    int id_barang;
+    private void initGambar() throws IOException{
+        BufferedImage simpanBtn = ImageIO.read(new File("image\\button\\simpan_btn.png"));
+        button_simpan.setIcon(new ImageIcon(simpanBtn.getScaledInstance(simpanBtn.getWidth(), simpanBtn.getHeight(), Image.SCALE_SMOOTH)));
+        
+    }
 
     public void SimpanData() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String Namabrg = txtNamabrg.getText();
-        String Jenisbrg = (String) cmbJenisbrg.getSelectedItem();
-        String Statusbrg = (String) cmbStatusbrg.getSelectedItem();
-        String Tglmasuk = sdf.format(calTglmasuk.getDate());
-        String Umurbrg = txtUmurbrg.getText();
+        String namaBrg = txtNamabrg.getText();
+        String jenisBrg = (String) cmbJenisbrg.getSelectedItem();
+        String kondisiBrg = (String) cmbKondisibrg.getSelectedItem();
+        String tglMasuk = sdf.format(calTglmasuk.getDate());
+        String umurBrg = txtUmurbrg.getText();
         String idBarcode = idbarcode.getText();
-        
+
         try {
             Statement stmt = koneksi.createStatement();
 //            String query = "INSERT INTO tbl_barang(nama_barang,tanggal_masuk,status,jenis_brg,umur_barang)"
 //                    + "VALUES ('" + Namabrg + "','" + Tglmasuk + "','" + Statusbrg + "','" + Jenisbrg + "','" + Umurbrg + "')";
-            String query = "INSERT INTO tbl_barang(nama_barang,id_barcode,tanggal_masuk,status,image)"
-                    + "VALUES ('" + Namabrg + "','"+idBarcode+"','" + Tglmasuk + "','" + Statusbrg + "','"+filePath+"')";
+            String query = "INSERT INTO barang(nama_barang,id_barcode,tanggal_masuk,kondisi_barang,image,type_barang)"
+                    + "VALUES ('" + namaBrg + "','" + idBarcode + "','" + tglMasuk + "','" + kondisiBrg + "','" + filePath + "','"+jenisBrg+"')";
             System.out.println(query);
             int berhasil = stmt.executeUpdate(query);
             if (berhasil == 1) {
@@ -248,35 +272,24 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
         }
     }
     
-    private String getImagePath() {
-        String selectedFiles = "";
-        JFileChooser jfc = new JFileChooser();
-        int result = jfc.showOpenDialog(null);
-        if (result == jfc.APPROVE_OPTION) {
-            selectedFiles = jfc.getSelectedFile().getPath();
-            System.out.println(selectedFiles);
-        }
-        pathLabel.setText("Path: "+selectedFiles);
-        return selectedFiles;
-    }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        String temp = parent.getImagePath();
+        pathLabel.setText("Path: " + temp);
+        System.out.println(temp);
+        filePath = temp.replaceAll("\\\\", "\\\\\\\\\\\\\\\\");
+        System.out.println(filePath);
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void button_simpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_simpanMouseClicked
         SimpanData();
         this.dispose();
         try {
             parent.pendataanBarangPanel.reloadLayakPakaiPanel();
             parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        String temp = getImagePath();
-        System.out.println(temp);
-        filePath = temp.replaceAll("\\\\", "\\\\\\\\\\\\\\\\");
-        System.out.println(filePath);
-    }//GEN-LAST:event_jButton2MouseClicked
+    }//GEN-LAST:event_button_simpanMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -302,7 +315,6 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
         }
         //</editor-fold>
 
-
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new BarangLayakPakai_TambahForm(null).setVisible(true);
@@ -311,11 +323,11 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel button_simpan;
     private com.toedter.calendar.JDateChooser calTglmasuk;
     private javax.swing.JComboBox<String> cmbJenisbrg;
-    private javax.swing.JComboBox<String> cmbStatusbrg;
+    private javax.swing.JComboBox<String> cmbKondisibrg;
     private javax.swing.JTextField idbarcode;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

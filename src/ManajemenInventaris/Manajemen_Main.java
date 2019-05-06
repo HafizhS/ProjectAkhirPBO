@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.io.File;
 import javax.imageio.ImageIO;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 public class Manajemen_Main extends javax.swing.JFrame {
@@ -73,6 +74,17 @@ public class Manajemen_Main extends javax.swing.JFrame {
         }
 
         return new Dimension((int) new_width, (int) new_height);
+    }
+    
+    public static String getImagePath() {
+        String selectedFiles = "";
+        JFileChooser jfc = new JFileChooser();
+        int result = jfc.showOpenDialog(null);
+        if (result == jfc.APPROVE_OPTION) {
+            selectedFiles = jfc.getSelectedFile().getPath();
+            System.out.println(selectedFiles);
+        }
+        return selectedFiles;
     }
     
     public void backToHome(JPanel panel) {

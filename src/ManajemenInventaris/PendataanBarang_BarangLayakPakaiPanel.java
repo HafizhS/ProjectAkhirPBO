@@ -47,7 +47,7 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
     private void initBarangfromDB() {
 
         try {
-            this.query = "select * from tbl_barang where status like '%SANGAT BAIK' OR status like '%BAIK'";
+            this.query = "select * from barang where kondisi_barang like '%baik' OR kondisi_barang like '%normal'";
             ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
             int i = 0;
             

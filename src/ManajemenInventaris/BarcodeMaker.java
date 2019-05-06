@@ -4,11 +4,18 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import javax.imageio.ImageIO;
 import net.sourceforge.barbecue.*;
+import net.sourceforge.barbecue.linear.code128.Code128Barcode;
 import net.sourceforge.barbecue.output.OutputException;
 import org.krysalis.barcode4j.*;
+import org.krysalis.barcode4j.impl.code128.Code128Bean;
+import org.krysalis.barcode4j.output.bitmap.BitmapCanvasProvider;
+import org.krysalis.barcode4j.tools.UnitConv;
 
 /**
  *
@@ -20,7 +27,25 @@ public class BarcodeMaker {
         System.out.println("Hello");
     }
 
-    public void nothin() {
+    public static BufferedImage create128BBarcode(String msg) throws FileNotFoundException, IOException {
+        Code128Bean code128Barcode = new Code128Bean();
+        code128Barcode.setHeight(11d);
+        final int dpi = 200;
+        code128Barcode.setModuleWidth(UnitConv.in2mm(1.0f / dpi));
+        code128Barcode.doQuietZone(false);
+        OutputStream out = new FileOutputStream(new File("output.barcode"));
+        BitmapCanvasProvider provider
+                = new BitmapCanvasProvider(out, "image/x-png", dpi,
+                        BufferedImage.TYPE_BYTE_GRAY,
+                         false,
+                        0);
+        code128Barcode.generateBarcode(provider, msg);
+
+        provider.finish();
+
+        BufferedImage bufferedImage = provider.getBufferedImage();
+        out.close();
+        return bufferedImage;
 
     }
 
@@ -29,29 +54,5 @@ public class BarcodeMaker {
         BufferedImage bi = BarcodeImageHandler.getImage(barcode);
         Image imageBarcode = bi.getScaledInstance(barcode.getWidth(), barcode.getHeight(), Image.SCALE_SMOOTH);
         return imageBarcode;
-    }
-
-    public static void saveToPNG(Image barcodeImage, File path) throws IOException {
-        RenderedImage renderedImage = (RenderedImage) barcodeImage.getGraphics();
-        ImageIO.write(renderedImage, "png", new File(""));
-
-    }
-
-    public static Image createBarcode() {
-        Image barcode = null;
-        try {
-            Barcode barcodeMaker = BarcodeFactory.createGlobalTradeItemNumber("009-291-24");
-            BufferedImage bih = BarcodeImageHandler.getImage(barcodeMaker);
-            ImageIO.write(bih, "png", new File("barcode-imgeio.png"));
-            BarcodeImageHandler.savePNG(barcodeMaker, new File("barcode-bih.png"));
-            barcode = bih.getScaledInstance(barcodeMaker.getWidth(), barcodeMaker.getHeight(), Image.SCALE_SMOOTH);
-        } catch (net.sourceforge.barbecue.BarcodeException ex) {
-            ex.printStackTrace();
-        } catch (OutputException ex) {
-            ex.printStackTrace();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return barcode;
     }
 }

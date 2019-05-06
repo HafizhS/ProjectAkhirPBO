@@ -37,14 +37,32 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
         this.parent = parent;
         initComponents();
 
-        String query = "Select * from tbl_barang where id_barang = '" + this.idbarang + "'";
+        String query = "Select * from barang where id_barang = '" + this.idbarang + "'";
 
         try {
             ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
             if (rs.next()) {
 
                 label_namabarang.setText(rs.getString("nama_barang"));
-                label_kondisi.setText(rs.getString("status"));
+                kondisi = rs.getString("kondisi_barang");
+                switch (kondisi) {
+                    case "baik":
+                        label_kondisi.setBackground(Color.CYAN);
+                        break;
+                    case "normal":
+                        label_kondisi.setBackground(Color.GREEN);
+                        break;
+                    case "hampir rusak":
+                        label_kondisi.setBackground(Color.YELLOW);
+                        break;
+                    case "rusak":
+                        label_kondisi.setBackground(Color.RED);
+                        break;
+                    default:
+                        label_kondisi.setBackground(Color.BLUE);
+                        break;
+                }
+                label_kondisi.setText(kondisi.toUpperCase());
 
                 if (rs.getString("image") != null) {
                     gambarBarang = ImageIO.read(new File(rs.getString("image")));
@@ -96,7 +114,7 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
         }
         if (gambarBarang != null) {
             Dimension scaledDimension = this.parent.getScaledDimension(new Dimension(gambarBarang.getWidth(), gambarBarang.getHeight()), new Dimension(239, 144));
-            label_gambarbarang.setIcon(new ImageIcon(gambarBarang.getScaledInstance((int) scaledDimension.getWidth(), (int) scaledDimension.getHeight(), Image.SCALE_SMOOTH)));
+            label_gambarbarang.setIcon(new ImageIcon(gambarBarang.getScaledInstance((int) scaledDimension.getWidth(), (int) scaledDimension.getHeight(), Image.SCALE_FAST)));
             label_gambarbarang.setText("");
         } else {
             label_gambarbarang.setText("Gambar tidak ada");
@@ -140,6 +158,7 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
         jLabel2.setText("Kondisi Barang ");
 
         label_kondisi.setText("{kondisi}");
+        label_kondisi.setOpaque(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -148,19 +167,19 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(5, 5, 5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(label_kondisi)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(label_namabarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(5, 5, 5)
-                .addComponent(label_gambarbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(label_kondisi)
+                            .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(label_namabarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(label_gambarbarang, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,11 +201,7 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void label_gambarbarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_gambarbarangMouseClicked
-        try {
-            new PendataanBarang_EditHapusForm(this, this.idbarang, "Edit").setVisible(true);
-        } catch (ParseException ex) {
-            Logger.getLogger(PendataanBarang_BarangPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new PendataanBarang_EditHapusForm(this, this.idbarang).setVisible(true);
     }//GEN-LAST:event_label_gambarbarangMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
