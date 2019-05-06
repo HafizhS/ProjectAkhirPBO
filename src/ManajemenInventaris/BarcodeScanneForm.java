@@ -1,7 +1,7 @@
 package ManajemenInventaris;
 
+import java.util.Scanner;
 import javax.swing.SwingWorker;
-
 
 public class BarcodeScanneForm extends javax.swing.JFrame {
 
@@ -12,6 +12,40 @@ public class BarcodeScanneForm extends javax.swing.JFrame {
         this.jTextField1.requestFocus(true);
         this.jTextField1.setFocusable(true);
         
+        Scanner scanner = new Scanner(System.in);
+        
+        ScannerThread scannerThread = new ScannerThread();
+        Thread thread = new Thread(scannerThread);
+        thread.start();
+        
+        
+    }
+
+    public static class ScannerThread implements Runnable {
+
+        boolean running = true;
+        Scanner s = new Scanner(System.in);
+        @Override
+        public void run() {
+            while (running) {
+                if (System.currentTimeMillis() > 5000) {
+                    System.out.println("TEST >>"+System.currentTimeMillis());
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException ex) {
+                    }
+                }
+            }
+        }
+        
+        public String getInputedString() {
+            return s.next();
+        }
+        
+        public void quit() {
+            running = false;
+        }
+
     }
 
     @SuppressWarnings("unchecked")
@@ -106,7 +140,6 @@ public class BarcodeScanneForm extends javax.swing.JFrame {
             jLabel2.setText(jTextField1.getText());
         }
     }//GEN-LAST:event_jTextField1KeyPressed
-
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
