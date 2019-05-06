@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
 
     private Manajemen_Main parent;
-
+    public boolean isAlreadyInit = false;
     private PeminjamanBarang_AfterPinjamButtonPanel darkPanel = null;
 
     public Manajemen_PeminjamanBarangPanel(Manajemen_Main parent) throws IOException {
@@ -183,7 +183,7 @@ public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
                 .addComponent(label_title)
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_titleDataPeminjam)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -196,7 +196,7 @@ public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(label_titleBarangDipinjam)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 317, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_home, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,14 +211,14 @@ public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_button_homeMouseClicked
 
     private void button_pinjamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_pinjamMouseClicked
-        darkPanel = new PeminjamanBarang_AfterPinjamButtonPanel(parent);
-        this.parent.add(darkPanel,BorderLayout.CENTER);
-        darkPanel.setBackground(new Color(0, 0, 0, 20));
-        this.parent.revalidate();
-        this.parent.repaint();
-        this.repaint();
-        this.revalidate();
-        
+        if (!this.isAlreadyInit) {
+            this.setVisible(false);
+            darkPanel = new PeminjamanBarang_AfterPinjamButtonPanel(parent);
+            this.parent.add(darkPanel, BorderLayout.CENTER);
+            darkPanel.setBackground(new Color(0, 0, 0, 50));
+            darkPanel.setVisible(true);
+            isAlreadyInit = true;
+        }
 
     }//GEN-LAST:event_button_pinjamMouseClicked
 
