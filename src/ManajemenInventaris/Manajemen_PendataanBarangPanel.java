@@ -16,10 +16,11 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
     private final Font BAR_FONT_BUTTON_ACTIVE = new java.awt.Font("Tahoma", 1, 16);
     private final Font BAR_FONT_BUTTON_UNACTIVE = new java.awt.Font("Tahoma", 0, 16);
 
-    public PendataanBarang_BarangLayakPakaiPanel barangLayakPakaiPanel = null;
-    public PendataanBarang_BarangTidakLayakPakaiPanel barangTidakLayakPakaiPanel = null;
-    public PendataanBarang_PinjamHistoryPanel pinjamHistoryPanel = null;
-    public PendataanBarang_PengembalianHistoryPanel pengembalianHistoryPanel = null;
+    private PendataanBarang_BarangLayakPakaiPanel barangLayakPakaiPanel = null;
+    private PendataanBarang_BarangTidakLayakPakaiPanel barangTidakLayakPakaiPanel = null;
+    private PendataanBarang_PinjamHistoryPanel pinjamHistoryPanel = null;
+    private PendataanBarang_PengembalianHistoryPanel pengembalianHistoryPanel = null;
+    private PendataanBarang_DataSiswaPanel dataSiswaPanel = null;
 
     public Manajemen_PendataanBarangPanel(Manajemen_Main parent) throws IOException {
         this.parent = parent;
@@ -30,6 +31,7 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
         barangLayakPakaiPanel = new PendataanBarang_BarangLayakPakaiPanel(parent, this);
         pinjamHistoryPanel = new PendataanBarang_PinjamHistoryPanel(parent, this);
         pengembalianHistoryPanel = new PendataanBarang_PengembalianHistoryPanel(parent, this);
+        dataSiswaPanel = new PendataanBarang_DataSiswaPanel(parent, this);
 
         this.docker_panel.add(barangLayakPakaiPanel, BorderLayout.CENTER);
         this.selectedPanel = barangLayakPakaiPanel;
@@ -284,7 +286,9 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
     private void bar_dataSiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bar_dataSiswaMouseClicked
         changeBarState(bar_dataSiswa);
 
+        this.selectedPanel = dataSiswaPanel;
         this.docker_panel.removeAll();
+        this.docker_panel.add(dataSiswaPanel, BorderLayout.CENTER);
 
         this.docker_panel.updateUI();
         this.docker_panel.revalidate();
