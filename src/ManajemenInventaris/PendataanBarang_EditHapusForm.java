@@ -362,7 +362,7 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
                 gambarBarcode.setText("");
                 imagePath = rs.getString("image");
                 pathLabel.setText("Path: " + imagePath);
-                if (imagePath != null || imagePath.equals("") || imagePath.equals("null")) {
+                if (imagePath != null || !imagePath.equals("") || !imagePath.equals("null")) {
                     BufferedImage biImage = ImageIO.read(new File(rs.getString("image")));
                     Dimension scaledDim = Manajemen_Main.getScaledDimension(new Dimension(biImage.getWidth(), biImage.getHeight()), new Dimension(310, 320));
                     gambarBarang.setIcon(new ImageIcon(biImage.getScaledInstance((int) scaledDim.getWidth(), (int) scaledDim.getHeight(), Image.SCALE_SMOOTH)));
@@ -377,6 +377,7 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Terjadi Kesalahan di Query");
         } catch (IOException ex) {
             ex.printStackTrace();
+            gambarBarang.setText("Gambar tidak ada");
         } catch (NullPointerException ex) {
             ex.printStackTrace();
             gambarBarang.setText("Gambar tidak ada");
