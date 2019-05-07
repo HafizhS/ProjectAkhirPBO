@@ -186,19 +186,19 @@ public class detailSiswa extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     public void showData(String nis) {
-        koneksi = DBConnection.getConnection();
+        koneksi = DBconnection.getKoneksi();
   
         try{
                   String sql = "SELECT * FROM murid " +
-                       "INNER JOIN tbl_peminjaman ON (murid.id_peminjaman = tbl_peminjaman.id_peminjaman) WHERE nis = '"+nis+"'";
+                       "JOIN peminjaman ON (murid.id_peminjaman = peminjaman.id_peminjaman) WHERE murid.nis = '"+nis+"'";
         System.out.println(sql);
         Statement stmt = koneksi.createStatement();
         ResultSet res = stmt.executeQuery(sql);
         res.first();
         jLabel8.setText(res.getString("nama"));
         jLabel9.setText(res.getInt("nis")+"");
-        jLabel10.setText(res.getString("kelas"));
-        jLabel11.setText(res.getString("jurusan"));
+        jLabel10.setText(res.getString("id_kelas"));
+//        jLabel11.setText(res.getString("jurusan"));
         jLabel12.setText(res.getInt("id_peminjaman")+"");
         }catch(SQLException ex ) {
             ex.printStackTrace();

@@ -86,6 +86,7 @@ public class SplashScreen extends javax.swing.JFrame {
                     isUnableToStart = true;
                 } catch (Exception ex) {
                     this.publish("<html><font color=red>Error memuat komponen utama </font>(" + ex.getMessage() + ")</html>");
+                    ex.printStackTrace();
                     this.cancel(true);
                 }
 
