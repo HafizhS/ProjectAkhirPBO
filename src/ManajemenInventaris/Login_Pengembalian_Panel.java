@@ -17,7 +17,7 @@ public class Login_Pengembalian_Panel extends javax.swing.JPanel {
      * Creates new form Login_Pengembalian_Panel
      */
     private Manajemen_Main parent = null;
-    
+
     public Login_Pengembalian_Panel(Manajemen_Main parent) {
         this.parent = parent;
         initComponents();
@@ -87,28 +87,25 @@ public class Login_Pengembalian_Panel extends javax.swing.JPanel {
 
     private void btn_pengembalianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pengembalianActionPerformed
         // TODO add your handling code here:
-        
-         try{
-            String sql = "SELECT * FROM tbl_murid WHERE nis = '" + text_pengembalian.getText()+ "'";
+
+        try {
+            String sql = "SELECT * FROM tbl_murid WHERE nis = '" + text_pengembalian.getText() + "'";
             java.sql.Connection conn = DBconnection.getKoneksi();
-            java.sql.Statement stm = conn.createStatement();    
+            java.sql.Statement stm = conn.createStatement();
             java.sql.ResultSet res = stm.executeQuery(sql);
-            
+
             if (res.next()) {
-                if (res.getString("level").equals("1")) {
-                   parent.pengembalianBarangPanel = new Manajemen_PengembalianBarangPanel(parent);
-                   parent.add(parent.pengembalianBarangPanel);
-                   this.revalidate();
-                   parent.revalidate();
-                   parent.login_Pengembalian_Panel.setVisible(false);
-                    
-                    
+                if (res.getString("id_level").equals("1")) {
+                    parent.pengembalianBarangPanel = new Manajemen_PengembalianBarangPanel(parent,res.getInt("id_murid"));
+                    parent.add(parent.pengembalianBarangPanel);
+                    this.revalidate();
+                    parent.revalidate();
+                    parent.login_Pengembalian_Panel.setVisible(false);
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Maaf Data Tidak Valid");
             }
-            else {
-                JOptionPane.showMessageDialog(null,"Maaf Data Tidak Valid");
-            }
-        }catch(Exception e){
+        } catch (Exception e) {
             e.getMessage();
         }
         text_pengembalian.setText("");

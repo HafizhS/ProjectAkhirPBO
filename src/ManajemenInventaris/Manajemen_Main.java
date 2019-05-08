@@ -30,8 +30,8 @@ public class Manajemen_Main extends javax.swing.JFrame {
 
         homePanel = new Manajemen_HomePanel(this);
         pendataanBarangPanel = new Manajemen_PendataanBarangPanel(this);
-        pengembalianBarangPanel = new Manajemen_PengembalianBarangPanel(this);
-        peminjamanBarangPanel = new Manajemen_PeminjamanBarangPanel(this);
+//        pengembalianBarangPanel = new Manajemen_PengembalianBarangPanel(this);
+//        peminjamanBarangPanel = new Manajemen_PeminjamanBarangPanel(this);
 
         this.getContentPane().add(pendataanBarangPanel, BorderLayout.CENTER);
         pendataanBarangPanel.setVisible(false);

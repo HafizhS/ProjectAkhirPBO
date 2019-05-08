@@ -44,6 +44,11 @@ public class PeminjamanBarang_AfterPinjamButtonPanel extends javax.swing.JPanel 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("back_button");
         jLabel2.setOpaque(true);
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         label_titleDataPeminjam.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         label_titleDataPeminjam.setForeground(new java.awt.Color(51, 102, 255));
@@ -156,6 +161,15 @@ public class PeminjamanBarang_AfterPinjamButtonPanel extends javax.swing.JPanel 
         parent.peminjamanBarangPanel.isAlreadyInit = false;
         this.parent.remove(this);
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        parent.peminjamanBarangPanel.setVisible(true);
+        parent.peminjamanBarangPanel.isAlreadyInit = false;
+        this.setVisible(false);
+        this.parent.remove(this);
+        parent.revalidate();
+        this.revalidate();
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

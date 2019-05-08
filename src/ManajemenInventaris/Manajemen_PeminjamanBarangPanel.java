@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -17,11 +19,22 @@ public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
     private Manajemen_Main parent;
     public boolean isAlreadyInit = false;
     private PeminjamanBarang_AfterPinjamButtonPanel darkPanel = null;
+    private int idMurid;
 
-    public Manajemen_PeminjamanBarangPanel(Manajemen_Main parent) throws IOException {
+    public Manajemen_PeminjamanBarangPanel(Manajemen_Main parent, int id_murid) throws IOException {
         this.parent = parent;
+        this.idMurid = id_murid;
         initComponents();
         initGambar();
+        try {
+            ResultSet rs = getDataFromDB(idMurid);
+            if (rs.next()) {
+                label_namaPeminjam.setText(rs.getString("nama"));
+                label_kelasPeminjam.setText(rs.getString("nama_kelas"));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void initGambar() throws IOException {
@@ -32,6 +45,11 @@ public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
         label_gambarHarapScan.setText("");
         button_pinjam.setIcon(new ImageIcon(pinjamBtn.getScaledInstance(pinjamBtn.getWidth(), pinjamBtn.getHeight(), Image.SCALE_SMOOTH)));
         button_pinjam.setText("");
+    }
+
+    private ResultSet getDataFromDB(int primarykey) throws SQLException {
+        String query = "SELECT * FROM tbl_murid JOIN tbl_kelas ON tbl_kelas.id_kelas = tbl_murid.id_kelas WHERE id_murid = '" + primarykey + "'";
+        return DBconnection.getKoneksi().createStatement().executeQuery(query);
     }
 
     @SuppressWarnings("unchecked")
@@ -77,11 +95,11 @@ public class Manajemen_PeminjamanBarangPanel extends javax.swing.JPanel {
 
         label_namaPeminjam.setFont(new java.awt.Font("Calibri", 0, 22)); // NOI18N
         label_namaPeminjam.setForeground(new java.awt.Color(102, 153, 255));
-        label_namaPeminjam.setText("John Doe");
+        label_namaPeminjam.setText("{nama}");
 
         label_kelasPeminjam.setFont(new java.awt.Font("Calibri", 0, 22)); // NOI18N
         label_kelasPeminjam.setForeground(new java.awt.Color(102, 153, 255));
-        label_kelasPeminjam.setText("XI RPL 3");
+        label_kelasPeminjam.setText("{kelas}");
 
         label_titleBarangDipinjam.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
         label_titleBarangDipinjam.setForeground(new java.awt.Color(51, 102, 255));

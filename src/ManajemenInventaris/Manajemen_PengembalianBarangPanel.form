@@ -38,13 +38,13 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="label_titleDataPeminjaman" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="label_titleWaktuPeminjaman" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                  <Component id="label_titleWaktuPengembalian" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="label_titleDataPeminjaman" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_titleWaktuPeminjaman" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                          <Component id="label_titleWaktuPengembalian" linkSize="1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="label_dataPeminjamanNama" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="label_dataPeminjamanKelas" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -55,20 +55,22 @@
                                   <Component id="label_kelas" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <Component id="label_waktuPeminjaman" alignment="1" min="-2" pref="227" max="-2" attributes="0"/>
-                          <Component id="label_waktuPengembalian" linkSize="1" alignment="1" min="-2" pref="205" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="label_waktuPengembalian" alignment="1" min="-2" pref="235" max="-2" attributes="0"/>
+                          <Component id="label_waktuPeminjaman" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="label_titleBarangDipinjam" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="label_titleBarangDipinjam" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -288,7 +290,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="08:35 11 Maret 2019"/>
+        <Property name="text" type="java.lang.String" value="{jam tanggal bulan tahun}"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_titleWaktuPengembalian">
@@ -310,7 +312,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="02:45 11 Maret 2019"/>
+        <Property name="text" type="java.lang.String" value="{jam tanggal bulan tahun}"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_titleBarangDipinjam">

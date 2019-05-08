@@ -176,7 +176,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="John Doe"/>
+        <Property name="text" type="java.lang.String" value="{nama}"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_kelasPeminjam">
@@ -187,7 +187,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="99" red="66" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="XI RPL 3"/>
+        <Property name="text" type="java.lang.String" value="{kelas}"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="label_titleBarangDipinjam">

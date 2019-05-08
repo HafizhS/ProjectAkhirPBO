@@ -90,7 +90,7 @@ public class Login_Peminjaman_Panel extends javax.swing.JPanel {
             Statement stmt = koneksi.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.first()) {
-                parent.peminjamanBarangPanel = new Manajemen_PeminjamanBarangPanel(parent);
+                parent.peminjamanBarangPanel = new Manajemen_PeminjamanBarangPanel(parent,rs.getInt("id_murid"));
                 parent.add(parent.peminjamanBarangPanel);
                 this.revalidate();
                 parent.revalidate();
