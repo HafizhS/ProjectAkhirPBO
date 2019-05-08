@@ -4,16 +4,11 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.table.DefaultTableModel;
 
 public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel {
-    DefaultTableModel dtm;
+
     private Manajemen_Main parent = null;
     private Manajemen_PendataanBarangPanel docker = null;
 
@@ -34,93 +29,6 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
         button_ubah.setText("");
         button_hapus.setText("");
     }
-    
-    public void showdata() {
-        String [] kolom = {"No" , "ID Pengembalian","Nama","NIS","Waktu Pengembelian","Tanggal Pengembalian"};
-        dtm = new DefaultTableModel (null,kolom);
-        int no = 1;
-        try{
-            Statement stmt = parent.koneksi.createStatement();
-            String query = "SELECT * FROM tbl_pengembalian " 
-                    + "INNER JOIN tbl_murid ON (tbl_pengembalian.id_murid = tbl_murid.id_murid)";
-            ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()) {
-                String id_pengembalian = String.valueOf(("id_pengembalian"));
-                String nis = String.valueOf(rs.getInt("nis"));
-                String nama = rs.getString("nama");
-                String tgl_pengembalian = rs.getDate("tgl_pengembalian").toString();
-                String wkt_pengembalian = rs.getTime("waktu_pengembalian").toString();
-                
-                dtm.addRow(new String[] {
-                   no + "" , id_pengembalian,nama,nis, tgl_pengembalian,wkt_pengembalian
-                });
-                no++;
-            }
-           table_pinjamHistory.setModel(dtm);
-        }catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-     public void filterNama() {
-        String [] kolom = {"No" , "ID Pengembalian","Nama","NIS","Waktu Pengembelian","Tanggal Pengembalian"};
-        dtm = new DefaultTableModel (null,kolom);
-        int no = 1;
-        try{
-            Statement stmt = parent.koneksi.createStatement();
-            String query = "SELECT * FROM tbl_pengembalian " 
-                    + "INNER JOIN tbl_murid ON (tbl_pengembalian.id_murid = tbl_murid.id_murid)"
-                    + "WHERE nama LIKE '%"+nama.getText()+"%'";
-            ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()) {
-                String id_pengembalian = String.valueOf(("id_pengembalian"));
-                String nis = String.valueOf(rs.getInt("nis"));
-                String nama = rs.getString("nama");
-                String tgl_pengembalian = rs.getDate("tgl_pengembalian").toString();
-                String wkt_pengembalian = rs.getTime("waktu_pengembalian").toString();
-                
-                dtm.addRow(new String[] {
-                   no + "" , id_pengembalian,nama,nis, tgl_pengembalian,wkt_pengembalian
-                });
-                no++;
-            }
-           table_pinjamHistory.setModel(dtm);
-        }catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-        
-      String asc_desc;
-      String orderBy;
-      public void filterOrderBy() {
-        String [] kolom = {"No" , "ID Pengembalian","Nama","NIS","Waktu Pengembelian","Tanggal Pengembalian"};
-        dtm = new DefaultTableModel (null,kolom);
-        int no = 1;
-        try{
-            Statement stmt = parent.koneksi.createStatement();
-            String query = "SELECT * FROM tbl_pengembalian " 
-                    + "INNER JOIN tbl_murid ON (tbl_pengembalian.id_murid = tbl_murid.id_murid)"
-                    + "ORDER BY "+orderBy+" "+asc_desc+"";
-            ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()) {
-                String id_pengembalian = String.valueOf(("id_pengembalian"));
-                String nis = String.valueOf(rs.getInt("nis"));
-                String nama = rs.getString("nama");
-                String tgl_pengembalian = rs.getDate("tgl_pengembalian").toString();
-                String wkt_pengembalian = rs.getTime("waktu_pengembalian").toString();
-                
-                dtm.addRow(new String[] {
-                   no + "" , id_pengembalian,nama,nis, tgl_pengembalian,wkt_pengembalian
-                });
-                no++;
-            }
-           table_pinjamHistory.setModel(dtm);
-        }catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -130,7 +38,6 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
         button_hapus = new javax.swing.JLabel();
         button_ubah = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        nama = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_pinjamHistory = new javax.swing.JTable();
 
@@ -146,8 +53,6 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
 
         jLabel2.setText("Hanya Super Admin yang hanya diperbolehkan Memanipulasi/Menyunting data History Pengembalian");
 
-        nama.setText("jTextField1");
-
         javax.swing.GroupLayout panel_bottomLayout = new javax.swing.GroupLayout(panel_bottom);
         panel_bottom.setLayout(panel_bottomLayout);
         panel_bottomLayout.setHorizontalGroup(
@@ -157,9 +62,7 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
                 .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(129, 129, 129)
                 .addComponent(jLabel2)
-                .addGap(113, 113, 113)
-                .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 384, Short.MAX_VALUE)
                 .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70))
         );
@@ -170,9 +73,7 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
                 .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_bottomLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -230,7 +131,6 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
     private javax.swing.JLabel button_ubah;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nama;
     private javax.swing.JPanel panel_bottom;
     private javax.swing.JTable table_pinjamHistory;
     // End of variables declaration//GEN-END:variables
