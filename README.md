@@ -1,4 +1,5 @@
 # FIZ FOKUS AJA DI PEMINJAMAN SAMA PENGEMBALIAN, PENDATAAN MAH NANTI DULU AJA
+# FIZ share database maneh
 # ProjectAkhirPBO
 
 FIZ kalo butuh database 
