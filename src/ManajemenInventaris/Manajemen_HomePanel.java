@@ -143,7 +143,8 @@ public class Manajemen_HomePanel extends javax.swing.JPanel {
         this.peminjamanbarang_btn.setIcon(new ImageIcon(peminjamanImage.getScaledInstance(peminjamanImage.getWidth(), persediaanImage.getHeight(), Image.SCALE_SMOOTH)));
         this.pengembalianbarang_btn.setIcon(new ImageIcon(pengembalianImage.getScaledInstance(pengembalianImage.getWidth(), pengembalianImage.getHeight(), Image.SCALE_SMOOTH)));
         scan_btn.setEnabled(true);
-        selectedPanel = parent.pendataanBarangPanel;
+        parent.Login_Pendataan_Panel = new Login_Pendataan_Panel(parent);
+        selectedPanel = parent.Login_Pendataan_Panel;
     }//GEN-LAST:event_persediaanbarang_btnMouseClicked
 
     private void peminjamanbarang_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_peminjamanbarang_btnMouseClicked

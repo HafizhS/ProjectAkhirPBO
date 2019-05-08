@@ -37,16 +37,16 @@ public class PendataanBarang_DataSiswaPanel extends javax.swing.JPanel {
         defaultTableModel = new DefaultTableModel(null, kolomTabel);
         try {
             connection = DBconnection.getKoneksi();
-            preStatement = connection.prepareStatement("SELECT * from murid ");
+            preStatement = connection.prepareStatement("SELECT * from tbl_murid ");
             //System.out.println(preStatement);
             result = preStatement.executeQuery();
             while (result.next()) {
                 String nis = result.getString("nis");
                 String nama = result.getString("nama");
                 String kelas = result.getString("id_kelas"); //kelas
-                String jurusan = result.getString("id_peminjaman"); //jurusan
+//                String jurusan = result.getString("id_peminjaman"); //jurusan
 
-                defaultTableModel.addRow(new String[]{nis, nama, kelas, jurusan});
+                defaultTableModel.addRow(new String[]{nis, nama, kelas});
             }
         } catch (SQLException e) {
             e.printStackTrace();

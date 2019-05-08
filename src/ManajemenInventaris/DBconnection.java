@@ -13,7 +13,7 @@ public class DBconnection {
         String host = "localhost";
         String port = "3306";
         String username = "root";
-        String password = "admin";
+        String password = "";
         String db = "inventory_app";
         String konString = "jdbc:mysql://" + host + ":" + port + "/" + db;
         Connection koneksi = null;

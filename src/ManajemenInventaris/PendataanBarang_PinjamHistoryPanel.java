@@ -144,7 +144,7 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
                 String id_peminjaman = String.valueOf(rs.getString("id_peminjaman"));
                 String nis = String.valueOf(rs.getInt("nis"));
                 String nama = rs.getString("nama");
-                String tgl_peminjaman = rs.getDate("tgl_peminjaman").toString();
+                String tgl_peminjaman = rs.getDate("tgl_meminjam").toString();
                 String wkt_peminjaman = rs.getTime("waktu_peminjaman").toString();
                 
                 dtm.addRow(new String [] {
