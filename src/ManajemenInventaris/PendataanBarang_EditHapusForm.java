@@ -322,7 +322,7 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
             Statement stmt = koneksi.createStatement();
 //            String query = "UPDATE barang SET nama_barang = '" + nama_barang + "', jenis_barang = '" + jenis_barang + "', kondisi_barang = '" + kondisi_barang + "' WHERE id_barang = '" + this.idBarang + "'";
 //            String updateWithDate = "UPDATE `barang` SET `id_barcode`='" + idBarcode + "',`nama_barang`='" + nama_barang + "',`tanggal_masuk`='" + new SimpleDateFormat("yyyy-MM-dd").parse(new SimpleDateFormat().format(calTglmasuk.getDate())) + "',`kondisi_barang`='" + kondisi_barang + "',`image`='" + imagePath + "',`type_barang`='" + jenis_barang + "' WHERE id_barang = '" + this.idBarang + "'";
-            String updateWithoutDate = "UPDATE `barang` SET `id_barcode`='" + idBarcode + "',`nama_barang`='" + nama_barang + "',`kondisi_barang`='" + kondisi_barang + "',`image`='" + imagePath + "',`type_barang`='" + jenis_barang + "' WHERE id_barang = '" + this.idBarang + "'";
+            String updateWithoutDate = "UPDATE `tbl_barang` SET `id_barcode`='" + idBarcode + "',`nama_barang`='" + nama_barang + "',`kondisi_barang`='" + kondisi_barang + "',`image`='" + imagePath + "',`type_barang`='" + jenis_barang + "' WHERE id_barang = '" + this.idBarang + "'";
 
 //            java.time.LocalDate localDate = DateWig
             System.out.println(updateWithoutDate);
@@ -345,7 +345,7 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
     public void showData(int idBarang) {
         try {
             Statement stmt = koneksi.createStatement();
-            String query = "SELECT * FROM barang WHERE id_barang = '" + idBarang + "'";
+            String query = "SELECT * FROM tbl_barang WHERE id_barang = '" + idBarang + "'";
             ResultSet rs = stmt.executeQuery(query);
             calTglmasuk.setDateFormatString("yyyy-MM-dd");
 
