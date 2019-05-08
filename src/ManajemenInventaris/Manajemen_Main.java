@@ -18,6 +18,7 @@ public class Manajemen_Main extends javax.swing.JFrame {
     public Manajemen_PeminjamanBarangPanel peminjamanBarangPanel = null;
     Connection koneksi;
     Login_Peminjaman_Panel Login_Peminjaman_Panel;
+    public Login_Pengembalian_Panel login_Pengembalian_Panel = null;
 
     public Manajemen_Main() throws Exception {
         initComponents();
@@ -101,7 +102,7 @@ public class Manajemen_Main extends javax.swing.JFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -110,7 +111,7 @@ public class Manajemen_Main extends javax.swing.JFrame {
 
         setSize(new java.awt.Dimension(1366, 759));
         setLocationRelativeTo(null);
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     /**
      * @param args the command line arguments
@@ -153,6 +154,6 @@ public class Manajemen_Main extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    // End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify                     
+    // End of variables declaration                   
 }
