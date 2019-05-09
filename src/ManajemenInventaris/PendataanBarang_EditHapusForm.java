@@ -394,7 +394,8 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
     public void HapusData() {
         try {
             Statement stmt = koneksi.createStatement();
-            String query = "DELETE FROM barang WHERE id_barang = " + this.idBarang + ";";
+            String query = "DELETE FROM tbl_barang WHERE id_barang = " + this.idBarang + ";";
+            System.out.println(query);
             int berhasil = stmt.executeUpdate(query);
             if (berhasil == 1) {
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
@@ -406,6 +407,24 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
         } finally {
             this.dispose();
         }
+    }
+    
+    public void HapusDataSementara() {
+        try{
+        Statement stmt = koneksi.createStatement();
+        String query = "UPDATE tbl_barang set status = '0' WHERE id_barang = '"+this.idBarang+"'";
+        int status = stmt.executeUpdate(query);
+        if (status == 1) {
+                JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
+            } else {
+                JOptionPane.showMessageDialog(null, "Data Gagal Dihapus");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            this.dispose();
+        }
+        
     }
 
 

@@ -8,6 +8,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import javax.imageio.ImageIO;
@@ -23,6 +25,8 @@ public class PendataanBarang_BarangTidakLayakPakaiPanel extends javax.swing.JPan
     private Manajemen_Main parent = null;
     private Manajemen_PendataanBarangPanel docker = null;
     private String query;
+    
+    SimpleDateFormat tf = new SimpleDateFormat("yyyy-MM-dd"); 
 
     //digunakan saat masa pengembangan
     private static final int DEVONLY_JUMLAH_BARANG = 100;
@@ -37,7 +41,7 @@ public class PendataanBarang_BarangTidakLayakPakaiPanel extends javax.swing.JPan
 //        initBarang();
         initBarangfromDB();
         initGambar();
-
+       
     }
 
     private void initGambar() throws IOException {
@@ -45,7 +49,9 @@ public class PendataanBarang_BarangTidakLayakPakaiPanel extends javax.swing.JPan
 
     private void initBarangfromDB() {
         try {
-            this.query = "select * from tbl_barang where kondisi_barang like '%hampir rusak' OR kondisi_barang like '%rusak'";
+            this.query = "select * from tbl_barang where kondisi_barang like '%hampir rusak%' OR kondisi_barang like '%rusak%'";
+            
+            System.out.println(this.query);
             ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
             int i = 0;
 
@@ -114,10 +120,10 @@ public class PendataanBarang_BarangTidakLayakPakaiPanel extends javax.swing.JPan
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    String tanggal1="",tanggal2 ="", asc_desc = "",order_by = "";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel_dockerBarang;

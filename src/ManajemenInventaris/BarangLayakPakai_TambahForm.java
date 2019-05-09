@@ -252,7 +252,7 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
             Statement stmt = koneksi.createStatement();
 //            String query = "INSERT INTO tbl_barang(nama_barang,tanggal_masuk,status,jenis_brg,umur_barang)"
 //                    + "VALUES ('" + Namabrg + "','" + Tglmasuk + "','" + Statusbrg + "','" + Jenisbrg + "','" + Umurbrg + "')";
-            String query = "INSERT INTO barang(nama_barang,id_barcode,tanggal_masuk,kondisi_barang,image,type_barang)"
+            String query = "INSERT INTO tbl_barang(nama_barang,id_barcode,tanggal_masuk,kondisi_barang,image,type_barang)"
                     + "VALUES ('" + namaBrg + "','" + idBarcode + "','" + tglMasuk + "','" + kondisiBrg + "','" + filePath + "','"+jenisBrg+"')";
             System.out.println(query);
             int berhasil = stmt.executeUpdate(query);
