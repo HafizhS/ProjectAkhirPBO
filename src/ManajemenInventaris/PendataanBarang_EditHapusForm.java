@@ -33,16 +33,21 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
     private String kondisi_barang;
     private String idBarcode;
     private String imagePath;
+    private int level;
+    private BufferedImage barcodeImage;
 
-    public PendataanBarang_EditHapusForm(PendataanBarang_BarangPanel barangPanel, int idBarang) {
+    public PendataanBarang_EditHapusForm(PendataanBarang_BarangPanel barangPanel, int idBarang, int level) {
         koneksi = DBconnection.getKoneksi();
         this.barangPanel = barangPanel;
         this.idBarang = idBarang;
         initComponents();
         initGambar();
+        this.level = level;
+        System.out.println("LEVEL = " + level);
         gambarBarang.setText("empty");
         noBarang.setEnabled(false);
         showData(this.idBarang);
+
     }
 
     private void initGambar() {
@@ -56,7 +61,6 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
     @SuppressWarnings("unchecked")
@@ -133,6 +137,11 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
 
         jLabel8.setForeground(new java.awt.Color(0, 51, 255));
         jLabel8.setText("Save Barcode to PNG");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
 
         jenisBarang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "asset", "sekali pakai" }));
 
@@ -171,13 +180,13 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8)
+                    .addComponent(gambarBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(gambarBarcode, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(gambarBarang, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(gambarBarcode, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 21, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel2)
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel6)
@@ -204,11 +213,11 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
                                     .addComponent(kondisiBarang, 0, 234, Short.MAX_VALUE))))
                         .addComponent(jButton3)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(74, 74, 74)
+                            .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(67, 67, 67)
                             .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(pathLabel))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,19 +248,18 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6)
                             .addComponent(calTglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(pathLabel)
-                        .addGap(0, 18, Short.MAX_VALUE))
+                        .addGap(0, 19, Short.MAX_VALUE))
                     .addComponent(gambarBarang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, 0)
                 .addComponent(gambarBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(13, 13, 13))
         );
@@ -282,18 +290,34 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void button_hapusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_hapusMouseClicked
-        HapusData();
-        try {
-            if (barangPanel.parent.pendataanBarangPanel.selectedPanel instanceof PendataanBarang_BarangLayakPakaiPanel) {
-                barangPanel.parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
-                barangPanel.parent.pendataanBarangPanel.reloadLayakPakaiPanel();
-            } else if (barangPanel.parent.pendataanBarangPanel.selectedPanel instanceof PendataanBarang_BarangTidakLayakPakaiPanel) {
-                barangPanel.parent.pendataanBarangPanel.reloadLayakPakaiPanel();
-                barangPanel.parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
+        if (level == 2) {
+            HapusDataSementara();
+            try {
+                if (barangPanel.parent.pendataanBarangPanel.selectedPanel instanceof PendataanBarang_BarangLayakPakaiPanel) {
+                    barangPanel.parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
+                    barangPanel.parent.pendataanBarangPanel.reloadLayakPakaiPanel();
+                } else if (barangPanel.parent.pendataanBarangPanel.selectedPanel instanceof PendataanBarang_BarangTidakLayakPakaiPanel) {
+                    barangPanel.parent.pendataanBarangPanel.reloadLayakPakaiPanel();
+                    barangPanel.parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } else if (level == 3) {
+            HapusData();
+            try {
+                if (barangPanel.parent.pendataanBarangPanel.selectedPanel instanceof PendataanBarang_BarangLayakPakaiPanel) {
+                    barangPanel.parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
+                    barangPanel.parent.pendataanBarangPanel.reloadLayakPakaiPanel();
+                } else if (barangPanel.parent.pendataanBarangPanel.selectedPanel instanceof PendataanBarang_BarangTidakLayakPakaiPanel) {
+                    barangPanel.parent.pendataanBarangPanel.reloadLayakPakaiPanel();
+                    barangPanel.parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         }
+
     }//GEN-LAST:event_button_hapusMouseClicked
 
     private void button_ubahMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_ubahMouseClicked
@@ -310,6 +334,14 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_button_ubahMouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        try {
+            Manajemen_Main.saveImageToPNG(barcodeImage, "barang-" + nama_barang);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     public void editData() {
 //        this.id_barang = noBarang.getText();
@@ -351,14 +383,15 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
 
             if (rs.next()) {
                 noBarang.setText(rs.getString("id_barang"));
-                namaBarang.setText(rs.getString("nama_barang"));
+                nama_barang = rs.getString("nama_barang");
+                namaBarang.setText(nama_barang);
                 jenisBarang.setSelectedItem(rs.getString("type_barang"));
                 kondisiBarang.setSelectedItem(rs.getString("kondisi_barang"));
                 barcodeBarang.setText(rs.getString("id_barcode"));
                 Date date = new SimpleDateFormat("yyyy-MM-dd").parse(rs.getString("tanggal_masuk"));
                 calTglmasuk.setDate(date);
-                BufferedImage barcode = BarcodeMaker.create128BBarcode(rs.getString("id_barcode"));
-                gambarBarcode.setIcon(new ImageIcon(barcode.getScaledInstance(barcode.getWidth(), barcode.getHeight(), Image.SCALE_FAST)));
+                barcodeImage = BarcodeMaker.create128BBarcode(rs.getString("id_barcode"));
+                gambarBarcode.setIcon(new ImageIcon(barcodeImage.getScaledInstance(barcodeImage.getWidth(), barcodeImage.getHeight(), Image.SCALE_FAST)));
                 gambarBarcode.setText("");
                 imagePath = rs.getString("image");
                 pathLabel.setText("Path: " + imagePath);
@@ -408,13 +441,13 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
             this.dispose();
         }
     }
-    
+
     public void HapusDataSementara() {
-        try{
-        Statement stmt = koneksi.createStatement();
-        String query = "UPDATE tbl_barang set status = '0' WHERE id_barang = '"+this.idBarang+"'";
-        int status = stmt.executeUpdate(query);
-        if (status == 1) {
+        try {
+            Statement stmt = koneksi.createStatement();
+            String query = "UPDATE tbl_barang set status = '0' WHERE id_barang = '" + this.idBarang + "'";
+            int status = stmt.executeUpdate(query);
+            if (status == 1) {
                 JOptionPane.showMessageDialog(null, "Data Berhasil Dihapus");
             } else {
                 JOptionPane.showMessageDialog(null, "Data Gagal Dihapus");
@@ -424,7 +457,7 @@ public class PendataanBarang_EditHapusForm extends javax.swing.JDialog {
         } finally {
             this.dispose();
         }
-        
+
     }
 
 

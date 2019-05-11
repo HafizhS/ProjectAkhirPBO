@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -23,6 +24,7 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
     private String filePath = "";
     private Manajemen_Main parent = null;
     int id_barang;
+    int id_barcode;
 
     public BarangLayakPakai_TambahForm(Manajemen_Main parent) {
         this.parent = parent;
@@ -30,11 +32,19 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
         initComponents();
         try {
             initGambar();
-        }catch (IOException ex) {
+        } catch (IOException ex) {
             ex.printStackTrace();
-        }finally {
+        } finally {
             button_simpan.setText("");
         }
+
+        Random random = new Random();
+        for (int i = 1; i <= 1; i++) {
+            this.id_barcode = 1 + random.nextInt(100000);
+        }
+        String idBarcode = "SMKN4BDG" + "-(" + this.id_barcode + ")";
+        idbarcode.setText(idBarcode);
+        idbarcode.setEnabled(false);
     }
 
     @SuppressWarnings("unchecked")
@@ -95,8 +105,6 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
 
         jLabel9.setText("*Umur Barang");
 
-        txtUmurbrg.setEditable(false);
-
         jButton2.setText("Pilih gambar");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -122,14 +130,10 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel6))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addGap(380, 380, 380)
-                                .addComponent(button_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(16, Short.MAX_VALUE))
+                        .addGap(380, 380, 380)
+                        .addComponent(button_simpan, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -145,17 +149,15 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
                                 .addComponent(cmbJenisbrg, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(cmbKondisibrg, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jButton2)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(pathLabel))
-                                    .addComponent(txtUmurbrg, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNamabrg, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(idbarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(calTglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())))))
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(pathLabel))
+                            .addComponent(txtUmurbrg, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNamabrg, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(idbarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(calTglmasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,10 +235,10 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void initGambar() throws IOException{
+    private void initGambar() throws IOException {
         BufferedImage simpanBtn = ImageIO.read(new File("image\\button\\simpan_btn.png"));
         button_simpan.setIcon(new ImageIcon(simpanBtn.getScaledInstance(simpanBtn.getWidth(), simpanBtn.getHeight(), Image.SCALE_SMOOTH)));
-        
+
     }
 
     public void SimpanData() {
@@ -252,8 +254,8 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
             Statement stmt = koneksi.createStatement();
 //            String query = "INSERT INTO tbl_barang(nama_barang,tanggal_masuk,status,jenis_brg,umur_barang)"
 //                    + "VALUES ('" + Namabrg + "','" + Tglmasuk + "','" + Statusbrg + "','" + Jenisbrg + "','" + Umurbrg + "')";
-            String query = "INSERT INTO tbl_barang(nama_barang,id_barcode,tanggal_masuk,kondisi_barang,image,type_barang)"
-                    + "VALUES ('" + namaBrg + "','" + idBarcode + "','" + tglMasuk + "','" + kondisiBrg + "','" + filePath + "','"+jenisBrg+"')";
+            String query = "INSERT INTO tbl_barang(nama_barang,id_barcode,tanggal_masuk,kondisi_barang,image,type_barang,status)"
+                    + "VALUES ('" + namaBrg + "','" + idBarcode + "','" + tglMasuk + "','" + kondisiBrg + "','" + filePath + "','" + jenisBrg + "','1')";
             System.out.println(query);
             int berhasil = stmt.executeUpdate(query);
             if (berhasil == 1) {
@@ -271,7 +273,7 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
             }
         }
     }
-    
+
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         String temp = parent.getImagePath();
         pathLabel.setText("Path: " + temp);
@@ -284,8 +286,13 @@ public class BarangLayakPakai_TambahForm extends javax.swing.JDialog {
         SimpanData();
         this.dispose();
         try {
-            parent.pendataanBarangPanel.reloadLayakPakaiPanel();
-            parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
+            if (parent.pendataanBarangPanel.selectedPanel instanceof PendataanBarang_BarangLayakPakaiPanel) {
+                parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
+                parent.pendataanBarangPanel.reloadLayakPakaiPanel();
+            } else if (parent.pendataanBarangPanel.selectedPanel instanceof PendataanBarang_BarangTidakLayakPakaiPanel) {
+                parent.pendataanBarangPanel.reloadLayakPakaiPanel();
+                parent.pendataanBarangPanel.reloadTidakLayakPakaiPanel();
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }

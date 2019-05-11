@@ -103,22 +103,21 @@ public class Manajemen_HomePanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addComponent(persediaanbarang_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                .addComponent(peminjamanbarang_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92)
-                .addComponent(pengembalianbarang_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(label_title, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(574, 574, 574)
+                        .addGap(86, 86, 86)
+                        .addComponent(persediaanbarang_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(76, 76, 76)
+                        .addComponent(peminjamanbarang_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(73, 73, 73)
+                        .addComponent(pengembalianbarang_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(570, 570, 570)
                         .addComponent(scan_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(83, 83, 83))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,9 +129,9 @@ public class Manajemen_HomePanel extends javax.swing.JPanel {
                     .addComponent(peminjamanbarang_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                     .addComponent(pengembalianbarang_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
                     .addComponent(persediaanbarang_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE))
-                .addGap(51, 51, 51)
+                .addGap(82, 82, 82)
                 .addComponent(scan_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57))
+                .addGap(26, 26, 26))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -144,6 +143,8 @@ public class Manajemen_HomePanel extends javax.swing.JPanel {
         this.pengembalianbarang_btn.setIcon(new ImageIcon(pengembalianImage.getScaledInstance(pengembalianImage.getWidth(), pengembalianImage.getHeight(), Image.SCALE_SMOOTH)));
         scan_btn.setEnabled(true);
         selectedPanel = parent.pendataanBarangPanel;
+        parent.Login_Pendataan_Panel = new Login_Pendataan_Panel(parent);
+        selectedPanel = parent.Login_Pendataan_Panel;
     }//GEN-LAST:event_persediaanbarang_btnMouseClicked
 
     private void peminjamanbarang_btnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_peminjamanbarang_btnMouseClicked

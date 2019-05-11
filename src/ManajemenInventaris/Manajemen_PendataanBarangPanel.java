@@ -3,15 +3,21 @@ package ManajemenInventaris;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
 
     public Manajemen_Main parent;
     public JPanel selectedPanel = null;
-    private final Color BAR_COLOR_BUTTON_ACTIVE = new Color(76, 135, 255);
+    private final Color BAR_COLOR_BUTTON_ACTIVE = new Color(79, 134, 243);
     private final Color BAR_COLOR_BUTTON_UNACTIVE = new Color(102, 153, 255);
     private final Font BAR_FONT_BUTTON_ACTIVE = new java.awt.Font("Tahoma", 1, 16);
     private final Font BAR_FONT_BUTTON_UNACTIVE = new java.awt.Font("Tahoma", 0, 16);
@@ -21,26 +27,36 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
     private PendataanBarang_PinjamHistoryPanel pinjamHistoryPanel = null;
     private PendataanBarang_PengembalianHistoryPanel pengembalianHistoryPanel = null;
     private PendataanBarang_DataSiswaPanel dataSiswaPanel = null;
-
-    public Manajemen_PendataanBarangPanel(Manajemen_Main parent) throws IOException {
+    public int level;
+    public Manajemen_PendataanBarangPanel(Manajemen_Main parent, int level) throws IOException {
         this.parent = parent;
         initComponents();
+        initGambar();
         this.docker_panel.setLayout(new BorderLayout());
-
-        barangTidakLayakPakaiPanel = new PendataanBarang_BarangTidakLayakPakaiPanel(parent, this);
-        barangLayakPakaiPanel = new PendataanBarang_BarangLayakPakaiPanel(parent, this);
-        pinjamHistoryPanel = new PendataanBarang_PinjamHistoryPanel(parent, this);
+        this.level = level;
+        barangTidakLayakPakaiPanel = new PendataanBarang_BarangTidakLayakPakaiPanel(parent, this,this.level);
+        barangLayakPakaiPanel = new PendataanBarang_BarangLayakPakaiPanel(parent, this, this.level);
+        pinjamHistoryPanel = new PendataanBarang_PinjamHistoryPanel(parent, this, this.level);
         pengembalianHistoryPanel = new PendataanBarang_PengembalianHistoryPanel(parent, this);
-        dataSiswaPanel = new PendataanBarang_DataSiswaPanel(parent, this);
+        dataSiswaPanel = new PendataanBarang_DataSiswaPanel(parent, this, this.level);
 
         this.docker_panel.add(barangLayakPakaiPanel, BorderLayout.CENTER);
         this.selectedPanel = barangLayakPakaiPanel;
+    }
 
+    private void initGambar() {
+        try {
+            BufferedImage homeBtn = ImageIO.read(new File("image\\button\\home_white_btn.png"));
+            button_home.setIcon(new ImageIcon(homeBtn.getScaledInstance(homeBtn.getWidth(),homeBtn.getHeight(), Image.SCALE_FAST)));
+            button_home.setText("");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void reloadLayakPakaiPanel() throws IOException{
         this.docker_panel.remove(barangLayakPakaiPanel);
-        this.docker_panel.add(barangLayakPakaiPanel = new PendataanBarang_BarangLayakPakaiPanel(parent, this));
+        this.docker_panel.add(barangLayakPakaiPanel = new PendataanBarang_BarangLayakPakaiPanel(parent, this,this.level));
         this.docker_panel.revalidate();
         this.docker_panel.updateUI();
         this.revalidate();
@@ -49,7 +65,7 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
     
     public void reloadTidakLayakPakaiPanel() throws IOException{
         this.docker_panel.remove(barangLayakPakaiPanel);
-        this.docker_panel.add(barangTidakLayakPakaiPanel = new PendataanBarang_BarangTidakLayakPakaiPanel(parent, this));
+        this.docker_panel.add(barangTidakLayakPakaiPanel = new PendataanBarang_BarangTidakLayakPakaiPanel(parent, this, this.level));
         this.docker_panel.revalidate();
         this.docker_panel.updateUI();
         this.revalidate();
@@ -61,12 +77,9 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        button_home = new javax.swing.JLabel();
         bar_barangLayakPakai = new javax.swing.JLabel();
         bar_dataSiswa = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
         bar_barangRusak = new javax.swing.JLabel();
         bar_peminjaman = new javax.swing.JLabel();
         bar_pengembalian = new javax.swing.JLabel();
@@ -77,13 +90,13 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(102, 153, 255));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("home_button");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        button_home.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        button_home.setForeground(new java.awt.Color(255, 255, 255));
+        button_home.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        button_home.setText("home_button");
+        button_home.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                button_homeMouseClicked(evt);
             }
         });
 
@@ -110,12 +123,6 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
                 bar_dataSiswaMouseClicked(evt);
             }
         });
-
-        jTextField1.setFont(new java.awt.Font("Verdana", 0, 12)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(255, 255, 255));
-        jTextField1.setText("Cari...");
-        jTextField1.setBorder(null);
-        jTextField1.setOpaque(false);
 
         bar_barangRusak.setBackground(new java.awt.Color(102, 153, 255));
         bar_barangRusak.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -157,11 +164,10 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 292, Short.MAX_VALUE)
+                .addComponent(button_home, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 222, Short.MAX_VALUE)
                 .addComponent(bar_barangLayakPakai, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(bar_barangRusak, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,30 +177,18 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
                 .addComponent(bar_pengembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(bar_dataSiswa, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_home, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bar_barangLayakPakai, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bar_dataSiswa, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bar_barangRusak, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bar_peminjaman, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bar_pengembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         docker_panel.setLayout(new java.awt.BorderLayout());
@@ -209,15 +203,15 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(docker_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(docker_panel, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+    private void button_homeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_homeMouseClicked
         this.parent.backToHome(this);
-    }//GEN-LAST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_button_homeMouseClicked
 
     private void changeBarState(JLabel whichActive) {
         bar_barangLayakPakai.setBackground(BAR_COLOR_BUTTON_UNACTIVE);
@@ -300,11 +294,8 @@ public class Manajemen_PendataanBarangPanel extends javax.swing.JPanel {
     private javax.swing.JLabel bar_dataSiswa;
     private javax.swing.JLabel bar_peminjaman;
     private javax.swing.JLabel bar_pengembalian;
+    private javax.swing.JLabel button_home;
     private javax.swing.JPanel docker_panel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

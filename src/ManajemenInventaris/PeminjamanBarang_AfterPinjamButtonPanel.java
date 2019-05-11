@@ -1,14 +1,25 @@
 package ManajemenInventaris;
 
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PeminjamanBarang_AfterPinjamButtonPanel extends javax.swing.JPanel {
 
     private Manajemen_Main parent = null;
-
-    public PeminjamanBarang_AfterPinjamButtonPanel(Manajemen_Main parent) {
+    public String nis;
+    public int rowCount;
+    public int id_peminjaman;
+    public PeminjamanBarang_AfterPinjamButtonPanel(Manajemen_Main parent,String nis,int row,int idPeminjaman) {
         this.parent = parent;
         initComponents();
+        this.nis = nis;
+        this.rowCount = row;
+        loadData();
+        this.id_peminjaman = idPeminjaman;
     }
 
     @SuppressWarnings("unchecked")
@@ -155,8 +166,26 @@ public class PeminjamanBarang_AfterPinjamButtonPanel extends javax.swing.JPanel 
                 .addGap(166, 166, 166))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    public void simpan() {
+        Date date = new Date();
+        Date tgl = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat frmt = new SimpleDateFormat("yyyy-MM-dd");
+        String now = sdf.format(date);
+        String tanggal = frmt.format(date);
+        try{
+            String sql = "INSERT INTO tbl_peminjaman VALUES('"+id_peminjaman+"','"+nis+"','"+tanggal+"','"+now+"','1')";
+            Statement stmt = parent.koneksi.createStatement();
+            stmt.executeUpdate(sql);
+            System.out.println(sql);
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        simpan();
         parent.backToHome(parent.peminjamanBarangPanel);
         parent.peminjamanBarangPanel.isAlreadyInit = false;
         this.parent.remove(this);
@@ -170,7 +199,25 @@ public class PeminjamanBarang_AfterPinjamButtonPanel extends javax.swing.JPanel 
         parent.revalidate();
         this.revalidate();
     }//GEN-LAST:event_jLabel2MouseClicked
-
+    
+    public void loadData() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        String now = sdf.format(date);
+        try{
+            String sql = "SELECT * FROM tbl_murid WHERE nis = '"+nis+"'";
+            Statement stmt = parent.koneksi.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            rs.first();
+            System.out.println(sql);
+            label_titleDataPeminjam4.setText(rs.getString("nama"));
+            label_titleDataPeminjam3.setText(now);
+            label_titleDataPeminjam6.setText(rowCount+"");
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

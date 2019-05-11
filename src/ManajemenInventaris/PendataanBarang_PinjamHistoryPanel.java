@@ -18,7 +18,8 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
     private Manajemen_Main parent = null;
     private Manajemen_PendataanBarangPanel docker = null;
     SimpleDateFormat tf = new SimpleDateFormat("yyyy-MM-dd"); 
-    public PendataanBarang_PinjamHistoryPanel(Manajemen_Main parent, Manajemen_PendataanBarangPanel docker) throws IOException {
+    int level ;
+    public PendataanBarang_PinjamHistoryPanel(Manajemen_Main parent, Manajemen_PendataanBarangPanel docker,int level) throws IOException {
         this.parent = parent;
         this.docker = docker;
         initComponents();
@@ -28,6 +29,7 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
        tanggal1 = tf.format(date);
        tanggal2 = tf.format(date);
        terbaru.setSelected(true);
+       this.level = level;
     }
     
     private void initImage() throws IOException {
@@ -62,8 +64,8 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
         btnRefresh = new javax.swing.JButton();
         btnFilter1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(0, 51, 255));
-        setForeground(new java.awt.Color(0, 51, 255));
+        setBackground(new java.awt.Color(79, 134, 243));
+        setForeground(new java.awt.Color(79, 134, 243));
 
         panel_bottom.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -80,22 +82,22 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
         panel_bottomLayout.setHorizontalGroup(
             panel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_bottomLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(110, 110, 110)
+                .addContainerGap()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 404, Short.MAX_VALUE)
-                .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panel_bottomLayout.setVerticalGroup(
             panel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_bottomLayout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
+            .addGroup(panel_bottomLayout.createSequentialGroup()
+                .addGap(1, 1, 1)
                 .addGroup(panel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2)))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255)));
@@ -124,13 +126,17 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
         table_pinjamHistory.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         table_pinjamHistory.setFillsViewportHeight(true);
         table_pinjamHistory.setGridColor(new java.awt.Color(51, 153, 255));
-        table_pinjamHistory.setOpaque(false);
         table_pinjamHistory.setRowHeight(40);
         table_pinjamHistory.setRowSelectionAllowed(false);
         table_pinjamHistory.setSelectionForeground(new java.awt.Color(51, 153, 255));
+        table_pinjamHistory.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                table_pinjamHistoryMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table_pinjamHistory);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Tampilkan Berdasarkan tanggal");
 
@@ -139,25 +145,28 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("-");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Tampilkan Berdasarkan Waktu");
 
         buttonGroup1.add(terbaru);
         terbaru.setText("Terbaru");
+        terbaru.setOpaque(false);
 
         buttonGroup1.add(terlama);
         terlama.setText("Terlama");
+        terlama.setOpaque(false);
 
-        btnRefresh.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRefresh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRefresh.setText("Refresh");
+        btnRefresh.setBorderPainted(false);
         btnRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRefreshActionPerformed(evt);
             }
         });
 
-        btnFilter1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnFilter1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnFilter1.setText("Filter");
         btnFilter1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,45 +184,50 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tgl1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
                         .addComponent(terbaru)
                         .addGap(18, 18, 18)
-                        .addComponent(terlama, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tgl2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFilter1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(terlama, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(tgl1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tgl2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnFilter1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tgl1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tgl2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(terbaru)
-                        .addComponent(terlama))
-                    .addComponent(btnFilter1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tgl1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(terbaru)
+                            .addComponent(terlama))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnFilter1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(tgl2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(panel_bottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -222,8 +236,6 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
         showdata(false, "id_pengembalian", "ASC");
         tgl1.setDate(null);
         tgl2.setDate(null);
-        tanggal1 ="";
-       tanggal2 = "";
        asc_desc="";
        order_by="";
        terbaru.setSelected(true);
@@ -261,18 +273,30 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
         }
         showdata(true,order_by,asc_desc);
     }//GEN-LAST:event_btnFilter1ActionPerformed
+    int baris;
+    private void table_pinjamHistoryMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_pinjamHistoryMouseClicked
+        baris = table_pinjamHistory.getSelectedRow();
+        
+        if(baris == -1) {
+            return;
+        }else {
+            String id_peminjaman = (String) table_pinjamHistory.getValueAt(baris, 1);
+            detailPinjamHistory dph = new detailPinjamHistory(parent,true,id_peminjaman,this.level);
+            dph.setVisible(true);
+        } 
+    }//GEN-LAST:event_table_pinjamHistoryMouseClicked
 
-    public void showdata(boolean filter, String desc_asc, String orderBy){
+    public void showdata(boolean filter, String orderBy, String desc_asc){
     String [] kolom = {"NO" , "ID Peminjaman","Nama","NIS","Waktu Peminjaman","Tanggal Peminjaman"};
     dtm = new DefaultTableModel (null,kolom);
     int no = 1;
     try{
         Statement stmt = parent.koneksi.createStatement();
         String query = "SELECT * FROM tbl_peminjaman "
-                +"INNER JOIN tbl_murid ON (tbl_peminjaman.nis = tbl_murid.nis)";
+                +"INNER JOIN tbl_murid ON (tbl_peminjaman.nis = tbl_murid.nis) WHERE (tbl_peminjaman.status = '1')";
                 if(filter) {
-                    query += " WHERE tgl_peminjaman >= '"+tanggal1+"' AND tgl_peminjaman <= '"+tanggal2+"'"
-                        + " ORDER BY "+desc_asc+" "+orderBy+" ";
+                    query += " AND tgl_peminjaman >= '"+tanggal1+"' AND tgl_peminjaman <= '"+tanggal2+"'"
+                        + " ORDER BY "+orderBy+" "+desc_asc+" ";
                 }
                 System.out.println(query);
                 ResultSet rs = stmt.executeQuery(query);
@@ -293,6 +317,8 @@ public class PendataanBarang_PinjamHistoryPanel extends javax.swing.JPanel {
     }catch(SQLException ex) {
         ex.printStackTrace();
     }
+    
+    
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFilter1;

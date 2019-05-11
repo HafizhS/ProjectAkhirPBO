@@ -38,32 +38,40 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="label_titleDataPeminjaman" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="label_titleWaktuPeminjaman" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="label_titleWaktuPengembalian" linkSize="1" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="label_dataPeminjamanNama" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_dataPeminjamanKelas" alignment="0" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="label_atasNama" max="32767" attributes="0"/>
-                                  <Component id="label_kelas" max="32767" attributes="0"/>
-                              </Group>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="label_waktuPengembalian" alignment="1" min="-2" pref="235" max="-2" attributes="0"/>
+                              <Component id="label_waktuPeminjaman" min="-2" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="154" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="label_titleDataPeminjaman" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="label_titleWaktuPeminjaman" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="label_titleWaktuPengembalian" linkSize="1" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="22" pref="22" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="label_dataPeminjamanNama" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="label_dataPeminjamanKelas" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtnis" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="label_atasNama" max="32767" attributes="0"/>
+                                      <Component id="label_kelas" max="32767" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Component id="scanBarcode" alignment="0" min="-2" pref="231" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="label_waktuPengembalian" alignment="1" min="-2" pref="235" max="-2" attributes="0"/>
-                          <Component id="label_waktuPeminjaman" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="124" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="id_peminjaman" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
@@ -72,15 +80,7 @@
                   <Component id="jScrollPane1" max="32767" attributes="0"/>
                   <Component id="label_titleBarangDipinjam" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="label_titleKondisiBarang" min="-2" max="-2" attributes="0"/>
-                  <Component id="radBtn_HampirRusak" min="-2" max="-2" attributes="0"/>
-                  <Component id="radBtn_Rusak" min="-2" max="-2" attributes="0"/>
-                  <Component id="radBtn_SangatBaik" min="-2" max="-2" attributes="0"/>
-                  <Component id="radBtn_Baik" alignment="0" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="368" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -94,55 +94,40 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jSeparator1" alignment="0" pref="541" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="label_titleDataPeminjaman" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="label_dataPeminjamanNama" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_atasNama" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="label_dataPeminjamanKelas" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_kelas" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                              <Component id="label_titleWaktuPeminjaman" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="label_waktuPeminjaman" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                              <Component id="label_titleWaktuPengembalian" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="label_waktuPengembalian" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="label_titleBarangDipinjam" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="label_titleKondisiBarang" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane1" pref="346" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="radBtn_Rusak" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="radBtn_HampirRusak" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="radBtn_Baik" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="radBtn_SangatBaik" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                      </Group>
+                      <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
+                      <Component id="label_titleBarangDipinjam" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="346" max="32767" attributes="0"/>
                       <EmptySpace min="145" pref="145" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <Component id="label_titleDataPeminjaman" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="label_dataPeminjamanNama" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_atasNama" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="label_dataPeminjamanKelas" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_kelas" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtnis" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="label_titleWaktuPeminjaman" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="label_waktuPeminjaman" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="label_titleWaktuPengembalian" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="label_waktuPengembalian" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="scanBarcode" min="-2" pref="36" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="id_peminjaman" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
@@ -396,73 +381,6 @@
         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="Manajemen_PengembalianBarangPanel_jLabel2"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JLabel" name="label_titleKondisiBarang">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Calibri" size="24" style="1"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="99" red="66" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Kondisi Barang :"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="radBtn_Rusak">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Calibri" size="14" style="1"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="99" red="66" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Rusak"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="radBtn_HampirRusak">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Calibri" size="14" style="1"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="99" red="66" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Hampir Rusak"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="radBtn_Baik">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Calibri" size="14" style="1"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="99" red="66" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Baik"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JRadioButton" name="radBtn_SangatBaik">
-      <Properties>
-        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="ff" red="ff" type="rgb"/>
-        </Property>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Calibri" size="14" style="1"/>
-        </Property>
-        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-          <Color blue="ff" green="99" red="66" type="rgb"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="Sangat Baik"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JLabel" name="button_home">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
@@ -471,6 +389,16 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="button_homeMouseClicked"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JTextField" name="scanBarcode">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="scanBarcodeKeyPressed"/>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="scanBarcodeKeyTyped"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="id_peminjaman">
+    </Component>
+    <Component class="javax.swing.JLabel" name="txtnis">
     </Component>
   </SubComponents>
 </Form>

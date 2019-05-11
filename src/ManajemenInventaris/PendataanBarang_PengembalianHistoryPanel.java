@@ -43,7 +43,7 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
         button_hapus.setText("");
     }
     
-    public void showdata(boolean filter, String desc_asc, String orderBy) {
+    public void showdata(boolean filter, String orderBy, String desc_asc) {
         String [] kolom = {"No" , "ID Pengembalian","Nama","NIS","Waktu Pengembelian","Tanggal Pengembalian"};
         dtm = new DefaultTableModel (null,kolom);
         int no = 1;
@@ -53,8 +53,9 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
                     + "INNER JOIN tbl_murid ON (tbl_pengembalian.nis = tbl_murid.nis)";
             if(filter) {
                 query += " WHERE tgl_pengembalian >= '"+tanggal1+"' AND tgl_pengembalian <= '"+tanggal2+"'"
-                        + " ORDER BY "+desc_asc+" "+orderBy+" ";
+                        + " ORDER BY "+orderBy+" "+desc_asc+" ";
             }
+            System.out.println(query);
             ResultSet rs = stmt.executeQuery(query);
             while(rs.next()) {
                 String id_pengembalian = String.valueOf(rs.getInt("id_pengembalian"));
@@ -74,65 +75,6 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
         }
     }
     
-     public void filterNama() {
-        String [] kolom = {"No" , "ID Pengembalian","Nama","NIS","Waktu Pengembelian","Tanggal Pengembalian"};
-        dtm = new DefaultTableModel (null,kolom);
-        int no = 1;
-        try{
-            Statement stmt = parent.koneksi.createStatement();
-            String query = "SELECT * FROM tbl_pengembalian " 
-                    + "INNER JOIN tbl_murid ON (tbl_pengembalian.id_murid = tbl_murid.id_murid)"
-                    + "WHERE nama LIKE '%"+nama.getText()+"%'";
-            ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()) {
-                String id_pengembalian = String.valueOf(("id_pengembalian"));
-                String nis = String.valueOf(rs.getInt("nis"));
-                String nama = rs.getString("nama");
-                String tgl_pengembalian = rs.getDate("tgl_pengembalian").toString();
-                String wkt_pengembalian = rs.getTime("waktu_pengembalian").toString();
-                
-                dtm.addRow(new String[] {
-                   no + "" , id_pengembalian,nama,nis, tgl_pengembalian,wkt_pengembalian
-                });
-                no++;
-            }
-           table_pinjamHistory.setModel(dtm);
-        }catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-        
-      
-      public void filterOrderBy() {
-        String [] kolom = {"No" , "ID Pengembalian","Nama","NIS","Waktu Pengembelian","Tanggal Pengembalian"};
-        dtm = new DefaultTableModel (null,kolom);
-        int no = 1;
-        try{
-            Statement stmt = parent.koneksi.createStatement();
-            String query = "SELECT * FROM tbl_pengembalian " 
-                    + "INNER JOIN tbl_murid ON (tbl_pengembalian.id_murid = tbl_murid.id_murid)"
-                    + " ORDER BY "+order_by+" "+asc_desc+"";
-            ResultSet rs = stmt.executeQuery(query);
-            while(rs.next()) {
-                String id_pengembalian = String.valueOf(("id_pengembalian"));
-                String nis = String.valueOf(rs.getInt("nis"));
-                String nama = rs.getString("nama");
-                String tgl_pengembalian = rs.getDate("tgl_pengembalian").toString();
-                String wkt_pengembalian = rs.getTime("waktu_pengembalian").toString();
-                
-                dtm.addRow(new String[] {
-                   no + "" , id_pengembalian,nama,nis, tgl_pengembalian,wkt_pengembalian
-                });
-                no++;
-            }
-           table_pinjamHistory.setModel(dtm);
-        }catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -142,7 +84,6 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
         button_hapus = new javax.swing.JLabel();
         button_ubah = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        nama = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_pinjamHistory = new javax.swing.JTable();
         tgl1 = new com.toedter.calendar.JDateChooser();
@@ -155,7 +96,7 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
         btnRefresh = new javax.swing.JButton();
         btnFilter1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(102, 102, 102));
+        setBackground(new java.awt.Color(79, 134, 243));
 
         panel_bottom.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -167,34 +108,26 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
 
         jLabel2.setText("Hanya Super Admin yang hanya diperbolehkan Memanipulasi/Menyunting data History Pengembalian");
 
-        nama.setText("jTextField1");
-
         javax.swing.GroupLayout panel_bottomLayout = new javax.swing.GroupLayout(panel_bottom);
         panel_bottom.setLayout(panel_bottomLayout);
         panel_bottomLayout.setHorizontalGroup(
             panel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_bottomLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(129, 129, 129)
                 .addComponent(jLabel2)
-                .addGap(113, 113, 113)
-                .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(70, 70, 70))
+                .addContainerGap())
         );
         panel_bottomLayout.setVerticalGroup(
             panel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_bottomLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(panel_bottomLayout.createSequentialGroup()
                 .addGroup(panel_bottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(button_ubah, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(button_hapus, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 153, 255)));
@@ -292,7 +225,7 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
                     .addGroup(layout.createSequentialGroup()
                         .addGap(283, 283, 283)
                         .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(556, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(675, Short.MAX_VALUE)
@@ -315,14 +248,14 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
                     .addComponent(terlama)
                     .addComponent(btnRefresh, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(46, 46, 46)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(panel_bottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(78, 78, 78)
                     .addComponent(btnFilter1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(494, Short.MAX_VALUE)))
+                    .addContainerGap(505, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
     String tanggal1 ="",tanggal2 = "",asc_desc="",order_by="";
@@ -330,8 +263,6 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
        showdata(false, "id_pengembalian", "ASC");
        tgl1.setDate(null);
        tgl2.setDate(null);
-       tanggal1 ="";
-       tanggal2 = "";
        asc_desc="";
        order_by="";
        terbaru.setSelected(true);
@@ -342,6 +273,8 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
          Date date = new Date();
          Date Tanggal1 = tgl1.getDate();
          Date Tanggal2 = tgl2.getDate();
+         System.out.println(tanggal1);
+         System.out.println(tanggal2);
         if((Tanggal1 != null) && (Tanggal2 != null) ){
             tanggal1 = tf.format(tgl1.getDate());
             tanggal2 = tf.format(tgl2.getDate());
@@ -381,7 +314,6 @@ public class PendataanBarang_PengembalianHistoryPanel extends javax.swing.JPanel
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nama;
     private javax.swing.JPanel panel_bottom;
     private javax.swing.JTable table_pinjamHistory;
     private javax.swing.JRadioButton terbaru;

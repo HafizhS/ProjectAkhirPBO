@@ -2,14 +2,21 @@ package ManajemenInventaris;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
 
@@ -31,10 +38,10 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
         initGambar(); //init Gambar
 
         ButtonGroup bgKondisi = new ButtonGroup(); // membuat agar button ter-kelompok
-        bgKondisi.add(radBtn_Rusak);
-        bgKondisi.add(radBtn_HampirRusak);
-        bgKondisi.add(radBtn_Baik);
-        bgKondisi.add(radBtn_SangatBaik);
+//        bgKondisi.add(radBtn_Rusak);
+//        bgKondisi.add(radBtn_HampirRusak);
+//        bgKondisi.add(radBtn_Baik);
+//        bgKondisi.add(radBtn_SangatBaik);
 
         try {
             ResultSet rs = getUserDataFromDB(idMurid);
@@ -45,7 +52,62 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
+        scanBarcode.requestDefaultFocus();
+        scanBarcode.requestFocus();
+        scanBarcode.setFocusable(true);
+        txtnis.setVisible(false);
+        id_peminjaman.setVisible(true);
+        loadDataPeminjam();
+        loadTable();
+    }
+    
+    public void loadDataPeminjam() {
+        Date date = new Date();
+        SimpleDateFormat Format = new SimpleDateFormat("HH:mm:ss");
+        String now = Format.format(date);
+        try{
+            String sql = "SELECT * FROM tbl_kelas,tbl_detail_peminjaman,tbl_peminjaman,tbl_murid "
+                    + "WHERE(tbl_peminjaman.nis = tbl_murid.nis) AND (tbl_detail_peminjaman.id_peminjaman = tbl_detail_peminjaman.id_peminjaman)"
+                    + "AND (tbl_peminjaman.nis = '"+idMurid+"') AND (tbl_murid.id_kelas = tbl_kelas.id_kelas) and tbl_peminjaman.status = '1' ";
+            Statement stmt = parent.koneksi.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println(sql);
+            rs.first();
+            label_atasNama.setText(rs.getString("nama"));
+            label_kelas.setText(rs.getString("nama_kelas"));
+            label_waktuPeminjaman.setText(rs.getTime("waktu_peminjaman").toString());
+            label_waktuPengembalian.setText(now);
+            id_peminjaman.setText(rs.getInt("tbl_peminjaman.id_peminjaman")+"");
+            txtnis.setText(rs.getInt("tbl_murid.nis")+"");
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    DefaultTableModel dtm;
+    public void loadTable() {
+        String[] kolom = {"ID BARCODE","NAMA BARANG","TIPE BARANG","STATUS"};
+        dtm = new DefaultTableModel(null,kolom);
+        try{
+            String sql = "SELECT * FROM tbl_detail_peminjaman,tbl_peminjaman,tbl_barang "
+                    + "WHERE (tbl_detail_peminjaman.id_peminjaman = tbl_peminjaman.id_peminjaman) "
+                    + "AND (tbl_detail_peminjaman.id_barang = tbl_barang.id_barcode) "
+                    + "AND (tbl_peminjaman.nis = '"+idMurid+"') AND (tbl_peminjaman.status = '1') "
+                    + "AND (tbl_detail_peminjaman.status = '1') AND (tbl_barang.type_barang = 'asset' )";
+            Statement stmt = parent.koneksi.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            System.out.println(sql);
+            while(rs.next()) {
+                String id_barcode = rs.getString("id_barcode");
+                String namaBarang = rs.getString("nama_barang");
+                String tipeBarang = rs.getString("type_barang");
+                dtm.addRow(new String[] {
+                    id_barcode,namaBarang,tipeBarang,"BELUM DI KEMBALIKAN"
+                });
+            }
+        }catch(SQLException ex) {
+            
+        }
+        table_barangDipinjam.setModel(dtm);
     }
 
     private void initGambar() throws IOException {
@@ -86,12 +148,10 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
         table_barangDipinjam = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
         button_confirm = new javax.swing.JLabel();
-        label_titleKondisiBarang = new javax.swing.JLabel();
-        radBtn_Rusak = new javax.swing.JRadioButton();
-        radBtn_HampirRusak = new javax.swing.JRadioButton();
-        radBtn_Baik = new javax.swing.JRadioButton();
-        radBtn_SangatBaik = new javax.swing.JRadioButton();
         button_home = new javax.swing.JLabel();
+        scanBarcode = new javax.swing.JTextField();
+        id_peminjaman = new javax.swing.JLabel();
+        txtnis = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -211,35 +271,20 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
             }
         });
 
-        label_titleKondisiBarang.setFont(new java.awt.Font("Calibri", 1, 24)); // NOI18N
-        label_titleKondisiBarang.setForeground(new java.awt.Color(102, 153, 255));
-        label_titleKondisiBarang.setText("Kondisi Barang :");
-
-        radBtn_Rusak.setBackground(new java.awt.Color(255, 255, 255));
-        radBtn_Rusak.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        radBtn_Rusak.setForeground(new java.awt.Color(102, 153, 255));
-        radBtn_Rusak.setText("Rusak");
-
-        radBtn_HampirRusak.setBackground(new java.awt.Color(255, 255, 255));
-        radBtn_HampirRusak.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        radBtn_HampirRusak.setForeground(new java.awt.Color(102, 153, 255));
-        radBtn_HampirRusak.setText("Hampir Rusak");
-
-        radBtn_Baik.setBackground(new java.awt.Color(255, 255, 255));
-        radBtn_Baik.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        radBtn_Baik.setForeground(new java.awt.Color(102, 153, 255));
-        radBtn_Baik.setText("Baik");
-
-        radBtn_SangatBaik.setBackground(new java.awt.Color(255, 255, 255));
-        radBtn_SangatBaik.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
-        radBtn_SangatBaik.setForeground(new java.awt.Color(102, 153, 255));
-        radBtn_SangatBaik.setText("Sangat Baik");
-
         button_home.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         button_home.setText("home_button");
         button_home.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 button_homeMouseClicked(evt);
+            }
+        });
+
+        scanBarcode.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                scanBarcodeKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                scanBarcodeKeyTyped(evt);
             }
         });
 
@@ -262,39 +307,38 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(label_waktuPengembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label_waktuPeminjaman))
+                            .addGap(124, 124, 124))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(label_titleDataPeminjaman)
+                                .addComponent(label_titleWaktuPeminjaman, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label_titleWaktuPengembalian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGap(22, 22, 22)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(label_dataPeminjamanNama)
+                                        .addComponent(label_dataPeminjamanKelas)
+                                        .addComponent(txtnis))
+                                    .addGap(8, 8, 8)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(label_atasNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(label_kelas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(scanBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(150, 150, 150)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(label_titleDataPeminjaman)
-                            .addComponent(label_titleWaktuPeminjaman, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(label_titleWaktuPengembalian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(label_dataPeminjamanNama)
-                                    .addComponent(label_dataPeminjamanKelas))
-                                .addGap(8, 8, 8)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(label_atasNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(label_kelas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(154, 154, 154))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(label_waktuPengembalian, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(label_waktuPeminjaman))
-                        .addGap(124, 124, 124)))
+                        .addComponent(id_peminjaman)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(129, 129, 129)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addComponent(label_titleBarangDipinjam))
-                .addGap(98, 98, 98)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_titleKondisiBarang)
-                    .addComponent(radBtn_HampirRusak)
-                    .addComponent(radBtn_Rusak)
-                    .addComponent(radBtn_SangatBaik)
-                    .addComponent(radBtn_Baik))
-                .addGap(109, 109, 109))
+                .addGap(368, 368, 368))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {label_titleWaktuPeminjaman, label_titleWaktuPengembalian});
@@ -309,46 +353,37 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(label_titleDataPeminjaman)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(label_dataPeminjamanNama)
-                                    .addComponent(label_atasNama))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(label_dataPeminjamanKelas)
-                                    .addComponent(label_kelas))
-                                .addGap(38, 38, 38)
-                                .addComponent(label_titleWaktuPeminjaman)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(label_waktuPeminjaman)
-                                .addGap(24, 24, 24)
-                                .addComponent(label_titleWaktuPengembalian)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(label_waktuPengembalian))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(label_titleBarangDipinjam)
-                                    .addComponent(label_titleKondisiBarang))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(9, 9, 9)
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(radBtn_Rusak)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(radBtn_HampirRusak)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(radBtn_Baik)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(radBtn_SangatBaik)
-                                        .addGap(0, 0, Short.MAX_VALUE)))))
-                        .addGap(145, 145, 145)))
+                        .addGap(11, 11, 11)
+                        .addComponent(label_titleBarangDipinjam)
+                        .addGap(9, 9, 9)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 346, Short.MAX_VALUE)
+                        .addGap(145, 145, 145))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(label_titleDataPeminjaman)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_dataPeminjamanNama)
+                            .addComponent(label_atasNama))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(label_dataPeminjamanKelas)
+                            .addComponent(label_kelas))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtnis)
+                        .addGap(18, 18, 18)
+                        .addComponent(label_titleWaktuPeminjaman)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(label_waktuPeminjaman)
+                        .addGap(24, 24, 24)
+                        .addComponent(label_titleWaktuPengembalian)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(label_waktuPengembalian)
+                        .addGap(18, 18, 18)
+                        .addComponent(scanBarcode, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(id_peminjaman)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -363,14 +398,78 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_button_homeMouseClicked
 
     private void button_confirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_button_confirmMouseClicked
+       if(table_barangDipinjam.getRowCount() == 0) {
+           simpan();
+           ubahStatusPeminjaman();
         this.parent.getContentPane().add(berhasilPanel, new BorderLayout().CENTER);
         this.berhasilPanel.setVisible(true);
         this.parent.pengembalianBarangPanel.setVisible(false);
+       }else if(table_barangDipinjam.getRowCount() >= 0){
+           JOptionPane.showMessageDialog(null,"Barang yang anda masukkan belum semua");
+       }
+        
     }//GEN-LAST:event_button_confirmMouseClicked
+    
+    public void ubahStatusPeminjaman() {
+        try{
+            String sql = "UPDATE tbl_peminjaman SET status = '0' WHERE id_peminjaman = '"+id_peminjaman.getText()+"'";
+            Statement stmt = parent.koneksi.createStatement();
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+            loadTable();
+            id_peminjaman.setText("");
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    int id_pengembalian;
+    public void simpan() {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String tanggal = sdf.format(date);
+        
+        Random random = new Random();
+        for (int i = 1; i <= 1; i++) {
+            id_pengembalian = 1+random.nextInt(100000);
+        } 
+        
+        
+        try{
+            String sql = "INSERT INTO tbl_pengembalian "
+                    + "VALUES('"+id_pengembalian+"', '"+txtnis.getText()+"','"+tanggal+"', '"+label_waktuPengembalian.getText()+"') ";
+            Statement stmt = parent.koneksi.createStatement();
+            System.out.println(sql);
+            stmt.executeUpdate(sql);
+        }catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    private void scanBarcodeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scanBarcodeKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_scanBarcodeKeyTyped
+
+    private void scanBarcodeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_scanBarcodeKeyPressed
+      
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+            try{
+                String sql = "UPDATE tbl_detail_peminjaman SET status = '0' "
+                        + "WHERE id_barang = '"+scanBarcode.getText()+"' AND id_peminjaman = '"+id_peminjaman.getText()+"'";
+                Statement stmt = parent.koneksi.createStatement();
+                System.out.println(sql);
+                stmt.executeUpdate(sql);
+                loadTable();
+            }catch(SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_scanBarcodeKeyPressed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel button_confirm;
     private javax.swing.JLabel button_home;
+    private javax.swing.JLabel id_peminjaman;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
@@ -382,15 +481,12 @@ public class Manajemen_PengembalianBarangPanel extends javax.swing.JPanel {
     private javax.swing.JLabel label_title;
     private javax.swing.JLabel label_titleBarangDipinjam;
     private javax.swing.JLabel label_titleDataPeminjaman;
-    private javax.swing.JLabel label_titleKondisiBarang;
     private javax.swing.JLabel label_titleWaktuPeminjaman;
     private javax.swing.JLabel label_titleWaktuPengembalian;
     private javax.swing.JLabel label_waktuPeminjaman;
     private javax.swing.JLabel label_waktuPengembalian;
-    private javax.swing.JRadioButton radBtn_Baik;
-    private javax.swing.JRadioButton radBtn_HampirRusak;
-    private javax.swing.JRadioButton radBtn_Rusak;
-    private javax.swing.JRadioButton radBtn_SangatBaik;
+    private javax.swing.JTextField scanBarcode;
     private javax.swing.JTable table_barangDipinjam;
+    private javax.swing.JLabel txtnis;
     // End of variables declaration//GEN-END:variables
 }

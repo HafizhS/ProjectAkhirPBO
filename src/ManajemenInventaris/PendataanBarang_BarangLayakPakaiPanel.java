@@ -31,8 +31,8 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
     private String[] namaBarangs = {"dummy_barang", "barang_dummy", "barang_barang", "dummy_dummy"};
     private File[] gambarBarangs = {new File("image\\smkn4.png"), new File("image\\venom_test.jpg"), new File("image\\white_test.jpg")};
     private String[] kondisi = {"Baik", "Sangat Baik"};
-
-    public PendataanBarang_BarangLayakPakaiPanel(Manajemen_Main parent, Manajemen_PendataanBarangPanel docker) throws IOException {
+    int level;
+    public PendataanBarang_BarangLayakPakaiPanel(Manajemen_Main parent, Manajemen_PendataanBarangPanel docker, int level) throws IOException {
         this.docker = docker;
         this.parent = parent;
         initComponents();
@@ -42,12 +42,14 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
 
         this.revalidate();
         this.repaint();
+        this.level = level;
     }
 
     private void initBarangfromDB() {
 
         try {
-            this.query = "select * from tbl_barang where kondisi_barang like '%baik' OR kondisi_barang like '%normal'";
+            this.query = "select * from tbl_barang where (kondisi_barang like '%baik' OR kondisi_barang like '%normal') and status = '1' ";
+            System.out.println(query);
             ResultSet rs = DBconnection.getKoneksi().createStatement().executeQuery(query);
             int i = 0;
             
@@ -68,7 +70,7 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
                         try {
                             JLabel loadingLabel = new JLabel("Loading... [" + (i + 1) + "]");
                             panel_dockerBarang.add(loadingLabel, gbsBarangPanel);
-                            panel_dockerBarang.add(new PendataanBarang_BarangPanel(parent, rs.getInt("id_barang")), gbsBarangPanel);
+                            panel_dockerBarang.add(new PendataanBarang_BarangPanel(parent, rs.getInt("id_barang"),level), gbsBarangPanel);
                             panel_dockerBarang.remove(loadingLabel);
 
                         } catch (Exception ex) {
@@ -145,6 +147,9 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
         panel_dockerBarang = new javax.swing.JPanel();
         panel_bottom = new javax.swing.JPanel();
         button_tambah = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(102, 102, 102));
 
@@ -180,6 +185,33 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
             .addComponent(button_tambah, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE)
         );
 
+        jPanel1.setBackground(new java.awt.Color(79, 134, 243));
+
+        jTextField1.setText("jTextField1");
+
+        jButton1.setText("Cari");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addGap(30, 30, 30))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -187,13 +219,16 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1350, Short.MAX_VALUE)
-                    .addComponent(panel_bottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1360, Short.MAX_VALUE)
+                    .addComponent(panel_bottom, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 524, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(panel_bottom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -206,7 +241,10 @@ public class PendataanBarang_BarangLayakPakaiPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel button_tambah;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel panel_bottom;
     private javax.swing.JPanel panel_dockerBarang;
     // End of variables declaration//GEN-END:variables

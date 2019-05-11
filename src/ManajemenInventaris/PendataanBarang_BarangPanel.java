@@ -27,16 +27,16 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
     private int kuantitas;
     private BufferedImage gambarBarang;
     private String kondisi;
-
+    private int level;
     public PendataanBarang_BarangPanel(Manajemen_PendataanBarangPanel parent) {
         initComponents();
     }
 
-    public PendataanBarang_BarangPanel(Manajemen_Main parent, int idbarang) {
+    public PendataanBarang_BarangPanel(Manajemen_Main parent, int idbarang, int level) {
         this.idbarang = idbarang;
         this.parent = parent;
         initComponents();
-
+        this.level = level;
         String query = "Select * from tbl_barang where id_barang = '" + this.idbarang + "'";
 
         try {
@@ -201,7 +201,7 @@ public class PendataanBarang_BarangPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void label_gambarbarangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_gambarbarangMouseClicked
-        new PendataanBarang_EditHapusForm(this, this.idbarang).setVisible(true);
+        new PendataanBarang_EditHapusForm(this, this.idbarang, this.level).setVisible(true);
     }//GEN-LAST:event_label_gambarbarangMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

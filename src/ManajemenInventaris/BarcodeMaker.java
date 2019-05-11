@@ -31,8 +31,8 @@ public class BarcodeMaker {
         Code128Bean code128Barcode = new Code128Bean();
         code128Barcode.setHeight(11d);
         final int dpi = 200;
-        code128Barcode.setModuleWidth(UnitConv.in2mm(1.0f / dpi));
-        code128Barcode.doQuietZone(false);
+//        code128Barcode.setModuleWidth(UnitConv.in2mm(1.0f / dpi));
+//        code128Barcode.doQuietZone(false);
         OutputStream out = new FileOutputStream(new File("output.barcode"));
         BitmapCanvasProvider provider
                 = new BitmapCanvasProvider(out, "image/x-png", dpi,

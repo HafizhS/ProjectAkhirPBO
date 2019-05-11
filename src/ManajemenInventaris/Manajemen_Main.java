@@ -3,10 +3,13 @@ package ManajemenInventaris;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Manajemen_Main extends javax.swing.JFrame {
@@ -18,23 +21,24 @@ public class Manajemen_Main extends javax.swing.JFrame {
     public Manajemen_PeminjamanBarangPanel peminjamanBarangPanel = null;
     Connection koneksi;
     Login_Peminjaman_Panel Login_Peminjaman_Panel;
-    public Login_Pengembalian_Panel login_Pengembalian_Panel = null;
+    Login_Pendataan_Panel Login_Pendataan_Panel;
+    Login_Pengembalian_Panel login_Pengembalian_Panel = null;
 
     public Manajemen_Main() throws Exception {
         initComponents();
         koneksi = DBconnection.getKoneksi();
-        
+
         this.setLayout(new BorderLayout());
         this.setTitle("Manajemen Inventaris");
         this.setIconImage(ImageIO.read(new File("image\\smkn4.png")).getScaledInstance(30, 30, Image.SCALE_SMOOTH));
 
         homePanel = new Manajemen_HomePanel(this);
-        pendataanBarangPanel = new Manajemen_PendataanBarangPanel(this);
+//        pendataanBarangPanel = new Manajemen_PendataanBarangPanel(this);
 //        pengembalianBarangPanel = new Manajemen_PengembalianBarangPanel(this);
 //        peminjamanBarangPanel = new Manajemen_PeminjamanBarangPanel(this);
 
-        this.getContentPane().add(pendataanBarangPanel, BorderLayout.CENTER);
-        pendataanBarangPanel.setVisible(false);
+//        this.getContentPane().add(pendataanBarangPanel, BorderLayout.CENTER);
+//        pendataanBarangPanel.setVisible(false);
         this.getContentPane().add(homePanel, BorderLayout.CENTER);
         homePanel.setVisible(true);
 
@@ -60,7 +64,6 @@ public class Manajemen_Main extends javax.swing.JFrame {
 //
 //        return new Dimension((int) new_width, (int) new_height);
 //    }
-
     public static Dimension getScaledDimension(Dimension imgSize, Dimension boundary) {
         double original_width = imgSize.getWidth();
         double original_height = imgSize.getHeight();
@@ -81,7 +84,7 @@ public class Manajemen_Main extends javax.swing.JFrame {
 
         return new Dimension((int) new_width, (int) new_height);
     }
-    
+
     public static String getImagePath() {
         String selectedFiles = "";
         JFileChooser jfc = new JFileChooser();
@@ -92,7 +95,23 @@ public class Manajemen_Main extends javax.swing.JFrame {
         }
         return selectedFiles;
     }
-    
+
+    public static void saveImageToPNG(BufferedImage image,String name) throws IOException {
+        ImageIO.write(image, "png", new File("barcode-image\\"+name+"-barcode.png"));
+        JOptionPane.showMessageDialog(null, "Barcode di simpan di dalam folder 'barcode-image'");
+        
+//        JFileChooser jfc = new JFileChooser();
+//        jfc.setFileSelectionMode(jfc.DIRECTORIES_ONLY);
+//        jfc.setDialogTitle("Pilih Folder...");
+////        jfc.setAcceptAllFileFilterUsed(false);
+//        int result = jfc.showSaveDialog(null);
+//        if (jfc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+//            if (image != null) {
+//                System.out.println(jfc.getSelectedFile());
+//            }
+//        }
+    }
+
     public void backToHome(JPanel panel) {
         panel.setVisible(false);
         homePanel.repaint();
