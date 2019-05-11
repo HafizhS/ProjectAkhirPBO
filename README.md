@@ -1,5 +1,6 @@
 
 # FIZ FOKUS AJA DI PEMINJAMAN SAMA PENGEMBALIAN, PENDATAAN MAH NANTI DULU AJA
+# FIZ PAKE DATABASE SAYA AJA https://drive.google.com/open?id=1Y4dfhJ3sQ9NlWmahADj73QJ6DyH8tc39
 # ProjectAkhirPBO
 
 FIZ kalo butuh database 
